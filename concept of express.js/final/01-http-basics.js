@@ -1,7 +1,12 @@
 const http = require("http");
 
 const server = http.createServer((req, res) => {
-  console.log(req.method);
+  // console.log(req.method); //# --> GET
+  console.log(req.url); //# --> /
+
+  // in url "http://localhost:5000/about/yusuf"
+  // console.log(req.url); //# --> /about/yusuf
+
   const url = req.url;
   // home page
   if (url === "/") {
