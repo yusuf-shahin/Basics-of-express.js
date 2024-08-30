@@ -7,7 +7,11 @@ const app = express();
 app.use(express.static("./public"));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "./index.html"));
+  //# __dirname --> (server-app.js)
+  // res.sendFile(path.resolve(__dirname, "./index.html"));
+  //! move "./index.html" --> "./public"
+  //#   adding to static assets
+  //?   SSR
 });
 
 app.all("*", (req, res) => {

@@ -1,5 +1,39 @@
 # Basics of Express.js
 
+**Basic start**
+
+```js
+//! ===============
+//? express js :
+//! ===============
+
+// const express = require("express");
+// const app = express();
+
+// app.get("/", (req, res) => {
+//   res.send("<h1>Hello world</h1>");
+// });
+
+// app.listen(9000, () => {
+//   console.log("Example app listening on port 9000");
+// });
+
+//! ===============
+//? same thing using HTTP modules
+//! ===============
+
+const http = require("http");
+
+const server = http.createServer((req, res) => {
+  res.write("<h1>hello people</h1>");
+  res.end();
+});
+
+server.listen(9000, () => {
+  console.log("Example app listening on port 9000");
+});
+```
+
 ### Introduction to HTTP :-
 
 ![Alt](https://www.course-api.com/images/slides/slide-4.png)
@@ -25,10 +59,10 @@ const server = http.createServer((req, res) => {
   res.end("Hello, This is Home Page");
 });
 
-server.listen(5000);
+server.listen(9000);
 ```
 
-- **localhose:5000**
+- **localhose:9000**
 
 **_HTTP-Headers_**
 
@@ -46,7 +80,7 @@ const server = http.createServer((req, res) => {
 });
 ```
 
-- In the browser [localhost:5000](http://localhost:5000/) , any url we pass like `http://localhost:5000/about` or `http://localhost:5000/info` . The server always show us **Hello, This is Home Page**
+- In the browser [localhost:9000](http://localhost:9000/) , any url we pass like `http://localhost:9000/about` or `http://localhost:9000/info` . The server always show us **Hello, This is Home Page**
 
 **_HTTP-Request-Object_**
 
@@ -59,7 +93,7 @@ const server = http.createServer((req, res) => {
   // console.log(req.method); //# --> GET
   console.log(req.url); //# --> /
 
-  // in url "http://localhost:5000/about/yusuf"
+  // in url "http://localhost:9000/about/yusuf"
   // console.log(req.url); //# --> /about/yusuf
 
   // home page
@@ -84,7 +118,7 @@ const server = http.createServer((req, res) => {
   }
 });
 
-server.listen(5000);
+server.listen(9000);
 ```
 
 - to see the information from browser
@@ -98,7 +132,7 @@ _**When browser do not find the url :-**_
 
 ![Relative](./Image/error-file.jfif)
 
-#### [Simple HTTP module navbar project](https://github.com/yusuf-shahin/Basics-of-node-js/tree/main/simple%20http%20modules%20project)
+**[Simple HTTP module navbar project]**(https://github.com/yusuf-shahin/Basics-of-node-js/tree/main/simple%20http%20modules%20project)
 
 ## Expree JS
 
@@ -124,7 +158,7 @@ const server = http.createServer((req, res) => {
   // console.log(req.method); //# --> GET
   console.log(req.url); //# --> /
 
-  // in url "http://localhost:5000/about/yusuf"
+  // in url "http://localhost:9000/about/yusuf"
   // console.log(req.url); //# --> /about/yusuf
 
   const url = req.url;
@@ -148,7 +182,7 @@ const server = http.createServer((req, res) => {
   }
 });
 
-server.listen(5000);
+server.listen(9000);
 ```
 
 **We can do this by using _Express_ :-**
@@ -171,9 +205,11 @@ app.all("*", (req, res) => {
   res.status(404).send("<h1>resource not found</h1>");
 });
 
-app.listen(5000, () => {
-  console.log("server is listening on port 5000...");
+app.listen(9000, () => {
+  console.log("server is listening on port 9000...");
 });
 
-app.listen(5000);
+app.listen(9000);
 ```
+
+**[Expree Project]**(https://github.com/yusuf-shahin/Basics-of-express.js/tree/main/simple%20express-js%20project)
