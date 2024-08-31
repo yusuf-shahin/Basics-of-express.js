@@ -43,31 +43,85 @@ server.listen(9000, () => {
 _**HTTP-Basics**_
 
 - http is a build module of node, it is avalavle in **node_modules** folder, so just import it in our project .
-  `const http = require('http')`
+- `const http = require('http')`
 
 **create a http server**
-`const server = http.createServer((req, res) => {})`
+
+- `const server = http.createServer((req, res) => {})`
 
 - We pass two peremeter in _**http.createServer()**_ method **require** and **request**
 
 ![Alt](https://www.course-api.com/images/slides/slide-5.png)
 
+_**http.createServer() Example :-**_
+
 ```js
 const http = require("http");
 const server = http.createServer((req, res) => {
   console.log("user hit the server");
-  res.end("Hello, This is Home Page");
+  //# every time when we refreash our browser, in console we see this message
+  res.write("Hello this is my Home page");
+  res.end();
 });
 
-server.listen(9000);
+server.listen(9000, () => {
+  console.log("Example app listening on port 9000");
+});
 ```
 
 - **localhose:9000**
 
-**_HTTP-Headers_**
+**Create a basic _HTTP Server_ :-**
+
+```js
+const server = http.createServer((req, res) => {
+  // console.log(req.method); //# --> GET
+  // console.log(req.url); //# --> /
+  const url = req.url;
+
+  // in url "http://localhost:5000/about/yusuf"
+  // console.log(req.url); //# --> /about/yusuf
+
+  // home page
+  if (url === "/") {
+    res.write("<h1>home page</h1>");
+    res.end();
+  }
+  // about page
+  else if (url === "/about") {
+    res.write("<h1>about page</h1>");
+    res.end();
+  }
+
+  // 404
+  else {
+    res.write("<h1>page not found</h1>");
+    res.end();
+  }
+});
+
+server.listen(9000, () => {
+  console.log("Example app listening on port 9000");
+});
+```
+
+- here, in **url** if we write `http://localhost:9000/undefine` , borwser show us :-
+
+![Relative](./Image/not-found.jpeg)
+
+**But in borwser network we find this :-**
+
+![Relative](./Image/undefine-solved.jpeg)
+
+- **Page not found , but still in network everything is gonna ok**
+- Here come the concept of _HTTP Headers_ .
+
+**_HTTP Headers_**
 
 - writeHead() property, introduced in Node.js v1.0. It is part of the 'http' module. It is **used to send a response header to the incoming request.** The status code represents a _**3-digit HTTP status code**_ (e.g., 404), and the headers parameter contains the response headers.
-- [What is HIIP response status code ?](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status).
+
+- [What is HTTP response status code ?](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status).
+
 - `res.writeHead(200, { "content-type": "text/html" });`
 
 ```js
@@ -122,7 +176,7 @@ server.listen(9000);
 ```
 
 - to see the information from browser
-- _**inspect**--->**network**-->**localhost**_
+- _**inspect** ---> **network** --> **localhost**_
 
 _**When browser find the url :-**_
 
@@ -212,4 +266,4 @@ app.listen(9000, () => {
 app.listen(9000);
 ```
 
-**[Expree Project]**(https://github.com/yusuf-shahin/Basics-of-express.js/tree/main/simple%20express-js%20project)
+- [**Expree Project**](https://github.com/yusuf-shahin/Basics-of-express.js/tree/main/simple%20express-js%20project)
