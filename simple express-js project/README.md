@@ -33,6 +33,7 @@ const app = express();
 app.get("/", (req, res) => {
   //# __dirname --> (server-app.js)
   res.sendFile(path.resolve(__dirname, "./index.html"));
+  //# path.resolve() method add all file from root .
 });
 
 app.all("*", (req, res) => {
@@ -44,7 +45,7 @@ app.listen(5000, () => {
 });
 ```
 
-- `style.css` , `logo.svg` , `browser-app.js` those (setup static and middleware) path we dont get .
+- `style.css` , `logo.svg` , `browser-app.js` we dont get them .
 
 **For that reason the result in browser**
 
@@ -54,15 +55,19 @@ app.listen(5000, () => {
 
 ![Relative](./image/error-network.jpeg.jpeg)
 
-- So we must want to get `style.css` , `logo.svg` , `browser-app.js` those path (setup static and middleware) .
+- So we must want to get `style.css` , `logo.svg` , `browser-app.js` those path .
 
 **_create a folder name "public"_**
 
 - copy `style.css` , `logo.svg` , `browser-app.js`
 - past thats all file in **public** folder
 
-**setup static and middleware**
-`app.use(express.static("./public"));`
+**_setup static and middleware_**
+
+- `app.use(express.static("./public"));`
+- here **app.use()** method is setting up for _middleware_ .
+- **static** asset meaning the server does not need to change it.
+- the example of **static** asset is _image file , style file , javascript file_ .
 
 ### The whole code is :-
 
@@ -89,10 +94,30 @@ app.listen(5000, () => {
 });
 ```
 
-**Another approach _SSR_**
+**Another approach**
 
-**move _"./index.html"_ file --> _"./public"_ folder**
+- **as index.html is a static file, we can move this to public folder .**
 
-- we dont need this code `res.sendFile(path.resolve(__dirname, "./index.html"));` , so comment out them.
+- `"./index.html"` file --> `"./public"` folder
 
 - everything is gonna okk
+
+**The new code is :-**
+
+```js
+const express = require("express");
+const path = require("path");
+
+const app = express();
+
+// setup static and middleware
+app.use(express.static("./public"));
+
+app.all("*", (req, res) => {
+  res.status(404).send("resource not found");
+});
+
+app.listen(5000, () => {
+  console.log("server is listening on port 5000....");
+});
+```

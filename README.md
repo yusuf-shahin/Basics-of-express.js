@@ -1,26 +1,26 @@
 # Basics of Express.js
 
-**Basic start**
+**Simple introduction of _HTTP module_ and _express js_ **
 
 ```js
 //! ===============
 //? express js :
 //! ===============
 
-// const express = require("express");
-// const app = express();
+const express = require("express");
+const app = express();
 
-// app.get("/", (req, res) => {
-//   res.send("<h1>Hello world</h1>");
-// });
+app.get("/", (req, res) => {
+  res.send("<h1>Hello world</h1>");
+});
 
-// app.listen(9000, () => {
-//   console.log("Example app listening on port 9000");
-// });
+app.listen(9000, () => {
+  console.log("Example app listening on port 9000");
+});
 
-//! ===============
+// ! ===============
 //? same thing using HTTP modules
-//! ===============
+// ! ===============
 
 const http = require("http");
 
@@ -51,6 +51,8 @@ _**HTTP-Basics**_
 
 - We pass two peremeter in _**http.createServer()**_ method **require** and **request**
 
+- listen(9000, () => comsole.log(message))
+
 ![Alt](https://www.course-api.com/images/slides/slide-5.png)
 
 _**http.createServer() Example :-**_
@@ -69,7 +71,7 @@ server.listen(9000, () => {
 });
 ```
 
-- **localhose:9000**
+- **localhost:9000**
 
 **Create a basic _HTTP Server_ :-**
 
@@ -105,7 +107,7 @@ server.listen(9000, () => {
 });
 ```
 
-- here, in **url** if we write `http://localhost:9000/undefine` , borwser show us :-
+- **here, in _url_ if we write `http://localhost:9000/undefine` , borwser show us :-**
 
 ![Relative](./Image/not-found.jpeg)
 
@@ -113,16 +115,20 @@ server.listen(9000, () => {
 
 ![Relative](./Image/undefine-solved.jpeg)
 
-- **Page not found , but still in network everything is gonna ok**
+- **Page not found , but still in _network_ everything is gonna ok**
 - Here come the concept of _HTTP Headers_ .
 
 **_HTTP Headers_**
 
-- writeHead() property, introduced in Node.js v1.0. It is part of the 'http' module. It is **used to send a response header to the incoming request.** The status code represents a _**3-digit HTTP status code**_ (e.g., 404), and the headers parameter contains the response headers.
+- **writeHead()** property, introduced in Node.js v1.0. It is part of the 'http' module. It is **used to send a response header to the incoming request.** The status code represents a _**3-digit HTTP status code**_ (e.g., 404), and the headers parameter contains the response headers.
 
 - [What is HTTP response status code ?](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status).
 
 - `res.writeHead(200, { "content-type": "text/html" });`
+
+- res.writeHead(3-digit HTTP status code, {"content-type": ...})
+
+- **content-type**, could be _"text/html" , "text/css", "image/svg+xml", "text/javascript"_ .
 
 ```js
 const server = http.createServer((req, res) => {
@@ -190,6 +196,8 @@ _**When browser do not find the url :-**_
 
 ## Expree JS
 
+- [CLick here to learn express more](https://www.freecodecamp.org/news/express-explained-with-examples-installation-routing-middleware-and-more/)
+
 - `npm init -y`
 - `npm install express`
 
@@ -200,9 +208,49 @@ const express = require("express");
 const app = express();
 ```
 
-_**Simple version of HTTP modules in Express**_
+**in _app_ , we have a obj with banch of useful method**
 
+- app.get
+- app.post
+- app.put
+- app.delete
+- app.all ()
+- app.use
+- app.listen
+
+**Our focus**
 ![Alt](https://www.course-api.com/images/slides/slide-6.png)
+
+**Building a Server with Express :-**
+
+```js
+const express = require("express");
+const app = express();
+
+app.get("/", (req, res) => res.send("Hello World!"));
+
+app.listen(9000, () => console.log("Example app listening on port 9000!"));
+```
+
+- `get("path",callBack func);`
+- inside callback function `(req,res) => res.send()`
+- inside **send()** method we easily pass a _string_ or _HTML_ .
+- same , If want to create a page **about** we just write
+- `app.get("/about", (req, res) => res.send(<h1>about page</h1>));`
+
+**If _url_ gonna wrong or anything , we can easily set our _app.all()_ method**
+
+```js
+app.all("*", (req, res) => {
+  res.send("<h1>resource not found</h1>");
+});
+```
+
+- we also send **status()** method before **send()**
+- `res.status(404).send("<h1>resource not found</h1>");`
+- inside **_status()_** we pass **HTTP status code**
+
+**_Simple version of HTTP modules in Express_**
 
 **Instead of this code :-**
 
@@ -266,4 +314,8 @@ app.listen(9000, () => {
 app.listen(9000);
 ```
 
-- [**Expree Project**](https://github.com/yusuf-shahin/Basics-of-express.js/tree/main/simple%20express-js%20project)
+- we dont need to create a server like **HTTP** module.
+
+- [**Express Project**](https://github.com/yusuf-shahin/Basics-of-express.js/tree/main/simple%20express-js%20project)
+
+### JSON
