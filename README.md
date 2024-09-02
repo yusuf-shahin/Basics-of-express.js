@@ -569,6 +569,45 @@ app.listen(9000, () => {
 
 **Basic level**
 
+-[Learn more to click this article...](https://dev.to/m__mdy__m/middleware-in-expressjs-4b4)
+
+```js
+const express = require("express");
+const app = express();
+
+//  req ==> middleware ==> res
+
+//* logger function
+const logger = (req, res, next) => {
+  const method = req.method;
+  const url = req.url;
+  const time = new Date().getFullYear();
+  console.log(method, url, time);
+  next();
+};
+
+app.get("/", logger, (req, res) => {
+  res.send("Home");
+});
+app.get("/about", logger, (req, res) => {
+  res.send("About");
+});
+
+app.listen(9000, () => {
+  console.log("Server is listening on port 9000....");
+});
+```
+
+- create a logger function and pass it as the parameter of **get()** .
+- express supply three parameters in our _middleware_ **logger** function .
+- those parameters are **(req,res,next)** .
+- when we work with _middleware_ we also **res.send()** from it . It will properly work. or we pass it on next by invoking **next()** function .
+- in **localhost:9000**, everytime we refreash the browser we find `GET / 2024` in our console .
+
+**_app.use()_**
+
+- inside **app.use()** function we pass our all _middleware_
+
 ```js
 const express = require("express");
 const app = express();
@@ -583,6 +622,8 @@ const logger = (req, res, next) => {
   // res.send("middleware teasting")
   next();
 };
+
+//* middleware use() func
 app.use(logger);
 
 app.get("/", (req, res) => {
@@ -603,40 +644,52 @@ app.listen(9000, () => {
 });
 ```
 
-- create a logger function and pass it as the parameter of **get()** .
-- express supply three parameters in our _middleware_ **logger** function .
-- those parameters are **(req,res,next)** .
-- when we work with _middleware_ we also **res.send()** from it . It will properly work. or we pass it on next by invoking **next()** function .
-- in **localhost:9000**, everytime we refreash the browser we find `GET / 2024` in our console .
+- in _url_ we write `localhost:9000/` , `localhost:9000/about` , `localhost:9000/aboutId` , `localhost:9000/api/image` , `localhost:9000/api/products/1` ,`localhost:9000/api/product` , `localhost:9000/api/image` , `localhost:9000/api/image`
 
-**_app.use()_**
+**in console** we see that :-
+![Relative](./Image/middleware.jpeg)
 
-- inside this function we pass the _middleware_
+We also pass the path in **use()** method :-
+
+- `app.use("/api", logger);`
+
+- when we pass the path inside **use()** method, the _middleware_ **logger** func will work after path `/api` .
+
+\*\* the code after path `/api` pass in our use method :-
 
 ```js
-const express = require("express");
-const app = express();
-
-//  req ==> middleware ==> res
-
 const logger = (req, res, next) => {
   const method = req.method;
   const url = req.url;
   const time = new Date().getFullYear();
   console.log(method, url, time);
+  // res.send("middleware teasting")
   next();
 };
 
-app.get("/", logger, (req, res) => {
+app.use("/api", logger);
+
+app.get("/", (req, res) => {
   res.send("Home");
 });
-app.get("/about", logger, (req, res) => {
+app.get("/about", (req, res) => {
   res.send("About");
 });
 
-app.listen(9000, () => {
-  console.log("Server is listening on port 9000....");
+app.get("/api/image", (req, res) => {
+  res.send("image");
+});
+app.get("/api/test", (req, res) => {
+  res.send("test");
+});
+app.get("/api/product", (req, res) => {
+  res.send("product");
 });
 ```
+
+- in _url_ we write `localhost:9000/` , `localhost:9000/about` , `localhost:9000/aboutId` , `localhost:9000/api/image` , `localhost:9000/api/products/1` ,`localhost:9000/api/product` , `localhost:9000/api/image` , `localhost:9000/api/image`
+
+**in console** we see that :-
+![Relative](./Image/middleware-api.jpeg)
 
 - [**learn more...**](https://expressjs.com/en/4x/api.html#app.use)
