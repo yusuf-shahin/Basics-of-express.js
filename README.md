@@ -1,5 +1,7 @@
 # Basics of Express.js
 
+- _Domain_ : **localhost:9000**
+
 **Simple introduction of _HTTP module_ and _express js_ **
 
 ```js
@@ -404,7 +406,8 @@ app.listen(9000, () => {
 ```
 
 **in browser we see this**
-![Relative](./Image/show-json.jpeg)
+
+![Relative](./Image/all-products.jpeg)
 
 - if inspect our _network_ tab --> _header_ --> _response header_ we can see that **Content-Type** is **json**
 
@@ -455,7 +458,7 @@ app.get("/api/products/1", (req, res) => {
 
 - everythings is okk!
 
-#### _params property_
+#### **_params property_**
 
 instead of hard coding this `"/api/products/1"` --> _"products/1"_ , _"products/2"_ , _"products/3"_ we setup **a route parameter**
 
@@ -503,3 +506,137 @@ app.get("/api/products/:productID", (req, res) => {
   return res.json(singleProduct);
 });
 ```
+
+```js
+const express = require("express");
+const app = express();
+//# product in data.js
+const { products } = require("./data");
+app.get("/", (req, res) => {
+  //# sent html file :-
+  res.send('<h1> Home Page</h1><a href="/api/products">products</a>');
+});
+
+app.get("/api/products", (req, res) => {
+  const newProducts = products.map((product) => {
+    const { id, name, price } = product;
+    //# return id, name, price as object...
+    return { name, id, price };
+  });
+  res.status(200).send(newProducts);
+});
+
+app.get("/api/products/:productID", (req, res) => {
+  //? like ":productID" we can set any name in here. Name dose not matter . after "/api/products/" what  will we write . The value of :productID is automatically set.
+
+  //! for example :-
+  // in url we write "/api/products/yusuf"
+  console.log(req.params.productID);
+
+  // console.log(req.params) //# --> {productID : "yusuf"}
+  // console.log(req.params.productID) //# --> "yusuf"
+
+  //// same as
+  // in url we write "/api/products/1"
+  // console.log(req.params.productID) //# --> "1"
+  //# value of :productID it always a string
+
+  //* obj destructering
+  const { productID } = req.params;
+
+  const singleProduct = products.find(
+    (product) => product.id === Number(productID)
+  );
+
+  //* if id dose not find
+  if (!singleProduct) {
+    return res.status(404).send("Product Does Not Exist");
+  }
+
+  return res.json(singleProduct);
+});
+
+app.listen(9000, () => {
+  console.log("Server is listening on port 9000....");
+});
+```
+
+#### **_query string params_**
+
+#### **_Middleware Function_**
+
+- express middleware are function that execute during the request the server . Each middleware function has access to **request and reaponse** object .
+
+**Basic level**
+
+```js
+const express = require("express");
+const app = express();
+
+//  req ==> middleware ==> res
+
+const logger = (req, res, next) => {
+  const method = req.method;
+  const url = req.url;
+  const time = new Date().getFullYear();
+  console.log(method, url, time);
+  // res.send("middleware teasting")
+  next();
+};
+app.use(logger);
+
+app.get("/", (req, res) => {
+  res.send("Home");
+});
+app.get("/image", (req, res) => {
+  res.send("About");
+});
+app.get("/test", (req, res) => {
+  res.send("About");
+});
+app.get("/about", (req, res) => {
+  res.send("About");
+});
+
+app.listen(9000, () => {
+  console.log("Server is listening on port 9000....");
+});
+```
+
+- create a logger function and pass it as the parameter of **get()** .
+- express supply three parameters in our _middleware_ **logger** function .
+- those parameters are **(req,res,next)** .
+- when we work with _middleware_ we also **res.send()** from it . It will properly work. or we pass it on next by invoking **next()** function .
+- in **localhost:9000**, everytime we refreash the browser we find `GET / 2024` in our console .
+
+**_app.use()_**
+
+- inside this function we pass the _middleware_
+
+```js
+const express = require("express");
+const app = express();
+
+//  req ==> middleware ==> res
+
+const logger = (req, res, next) => {
+  const method = req.method;
+  const url = req.url;
+  const time = new Date().getFullYear();
+  console.log(method, url, time);
+  next();
+};
+
+app.get("/", logger, (req, res) => {
+  res.send("Home");
+});
+app.get("/about", logger, (req, res) => {
+  res.send("About");
+});
+
+app.listen(9000, () => {
+  console.log("Server is listening on port 9000....");
+});
+```
+
+- [**learn more...**](https://expressjs.com/en/4x/api.html#app.use)
