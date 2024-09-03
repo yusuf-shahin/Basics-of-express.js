@@ -323,7 +323,7 @@ app.listen(9000);
 
 - [**Express Project**](https://github.com/yusuf-shahin/Basics-of-express.js/tree/main/simple%20express-js%20project)
 
-### JSON
+## JSON
 
 **res.json([body])**
 
@@ -411,7 +411,7 @@ app.listen(9000, () => {
 
 - if inspect our _network_ tab --> _header_ --> _response header_ we can see that **Content-Type** is **json**
 
-**We also modify the json file and show it to browser**
+**We also modify the json file and show it to browser :-**
 
 ```js
 const express = require("express");
@@ -439,9 +439,11 @@ app.listen(9000, () => {
 });
 ```
 
-**Providethe info about the one specific product**
+- in here we just see **name, id , price** list of products in our browser.
 
-_simple system to render the **single product**_
+**Provide the info about one specific product :-**
+
+simple system to render the **single product**...
 
 ```js
 app.get("/api/products/1", (req, res) => {
@@ -456,20 +458,34 @@ app.get("/api/products/1", (req, res) => {
 
 ![Relative](./Image/single-product.jpeg)
 
-- everythings is okk!
+- everythings is okk! but we dont set the specific _url_ in everytime.
+- here comes the concept of **params** in express.
 
-#### **_params property_**
+## params (parameters )
 
-instead of hard coding this `"/api/products/1"` --> _"products/1"_ , _"products/2"_ , _"products/3"_ we setup **a route parameter**
+#### **_params property :-_**
 
-**What are params in express js ?**
+instead of hard coding this `/api/products/1`, `/api/products/2` , `/api/products/3` we setup **a route parameter**
 
-- params object **allows you to capture dynamic values from the URL path.** It is useful when you have route patterns with placeholders, such as “/users/:id” or “/products/:productId”.
+**What is params in express js ?**
 
+- params object **allows you to capture dynamic values from the URL path.** It is useful when you have route patterns with placeholders, such as `“/products/:productId”` here **:productId** is the _route params_ .
 - `app.get("/api/products/:productID", (req, res) => {})`
-- like ":productID" we can set any name in here. Name dose not matter . in url after **"/api/products/"** what will we write . The value of :productID is automatically set.
 
-**for example**
+using **params** in browser _url_ :-`localhost:9000/users/abcd`
+
+```js
+app.get("/api/products/:id", (req, res) => {
+  const id = req.params;
+  console.log(id); //# --> "abcd"
+});
+```
+
+- in console we get `abcd`
+
+- like **:productID** we can set any name in here. Name dose not matter . in url after `/api/products/` what will we write . The value of _:productID_ is automatically set.
+
+**example in details :-**
 
 ```js
 app.get("/api/products/:productID", (req, res) => {
@@ -477,9 +493,7 @@ app.get("/api/products/:productID", (req, res) => {
 
   // console.log(req.params) //# --> {productID : "yusuf"}
   // console.log(req.params.productID) //# --> "yusuf"
-
-  //// same as
-  // in url we write "/api/products/1"
+  // in url we write ==> "/api/products/1"
   // console.log(req.params.productID) //# --> "1"
   //# value of :productID it always be a string .
 
@@ -496,6 +510,7 @@ app.get("/api/products/:productID", (req, res) => {
 
   const singleProduct = products.find(
     (product) => product.id === Number(productID)
+    //# using Number() method coz "productID" is a string. or we can use double equal " == " in this code.
   );
 
   //* if id dose not find
@@ -506,6 +521,8 @@ app.get("/api/products/:productID", (req, res) => {
   return res.json(singleProduct);
 });
 ```
+
+**All thing in one code :-**
 
 ```js
 const express = require("express");
@@ -561,7 +578,66 @@ app.listen(9000, () => {
 });
 ```
 
-#### **_query string params_**
+**Extra information :-**
+
+- in path we pass a lot _params_ as wish as we want .
+
+```js
+app.get("/api/products/:productID/reviews/:reviewID", (req, res) => {
+  console.log(req.params);
+  res.send("hello world");
+});
+```
+
+- in browser _url_ we pass `localhost:9000/api/products/4/reviews/abc` that, console we see that `{productID : "4", reviewID : "abc"}`
+
+#### **_query string params_ (url parameters):-**
+
+**What is a Query Parameter?**
+
+- A query string is, to put it simply, the portion of a **URL (Uniform Resource Locator) that comes just after the question mark ==>.** `?`
+
+**Example:**
+
+- This is an illustration of a URL with query strings of a blog website that requests blogs on page number 3 and limits the response to only 3 objects. `https://helloworldblogs.com/search?page=2&limit=3`
+
+limit and Page, which have values of 3 and 2, respectively, are actual key-value pairs that make up the express query params. like that :-
+![Relative](./Image/query-string-params.jpeg)
+
+in _URL_ we pass `localhost:9000/api/v1/query?name=yusuf&id=7518`
+
+on **app.js**
+
+```js
+const express = require("express");
+const app = express();
+const { products } = require("./data.js");
+
+app.get("/api/v1/query", (req, res) => {
+  console.log(req.query);
+
+  res.status(200).json(products);
+});
+
+app.listen(9000, () => {
+  console.log("Server is listening on port 9000....");
+});
+```
+
+- **In browser url** we pass `localhost:9000/api/v1/query?name=yusuf&id=7518`
+
+![Relative](./Image/browser-url-params.jpeg)
+
+in console we get :-
+
+![Relative](./Image/console-url-params.jpeg)
+
+- in console we get `{name : "yusuf" , id : "7518"}`
+- here **name** and **id** is _key_ and **yusuf** and **7518** is the _value_
+
+same we can set any `key=value` after `?` mark and get them by `req.query` property .
+
+- `const {name} =  req.query ` ==> we can get the _value_ of **name** _key_
 
 #### **_Middleware Function_**
 
@@ -569,7 +645,7 @@ app.listen(9000, () => {
 
 **Basic level**
 
--[Learn more to click this article...](https://dev.to/m__mdy__m/middleware-in-expressjs-4b4)
+- [Learn more to click this article...](https://dev.to/m__mdy__m/middleware-in-expressjs-4b4)
 
 ```js
 const express = require("express");
@@ -653,11 +729,15 @@ We also pass the path in **use()** method :-
 
 - `app.use("/api", logger);`
 
-- when we pass the path inside **use()** method, the _middleware_ **logger** func will work after path `/api` .
+- _middleware_ **logger** func will work after path `/api` .
 
-\*\* the code after path `/api` pass in our use method :-
+- the code after path `/api` pass in our use method :-
 
 ```js
+const express = require("express");
+const app = express();
+
+//  req ==> middleware ==> res
 const logger = (req, res, next) => {
   const method = req.method;
   const url = req.url;
@@ -685,6 +765,10 @@ app.get("/api/test", (req, res) => {
 app.get("/api/product", (req, res) => {
   res.send("product");
 });
+
+app.listen(9000, () => {
+  console.log("Server is listening on port 9000....");
+});
 ```
 
 - in _url_ we write `localhost:9000/` , `localhost:9000/about` , `localhost:9000/aboutId` , `localhost:9000/api/image` , `localhost:9000/api/products/1` ,`localhost:9000/api/product` , `localhost:9000/api/image` , `localhost:9000/api/image`
@@ -692,4 +776,8 @@ app.get("/api/product", (req, res) => {
 **in console** we see that :-
 ![Relative](./Image/middleware-api.jpeg)
 
+- in _url_ `localhost:9000/api` after that path our _middleware_ function is work .
+
 - [**learn more...**](https://expressjs.com/en/4x/api.html#app.use)
+
+**_Multiple Middleware function :-_**

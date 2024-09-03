@@ -1,34 +1,31 @@
 const express = require("express");
 const app = express();
+const { products } = require("./data.js");
 
-//  req ==> middleware ==> res
+app.get("/api/v1/id", (req, res) => {
+  // console.log(req.query);
 
-const logger = (req, res, next) => {
-  const method = req.method;
-  const url = req.url;
-  const time = new Date().getFullYear();
-  console.log(method, url, time);
-  // res.send("middleware teasting")
-  next();
-};
+  const { name } = req.query;
+  console.log(name);
 
-app.use("/api", logger);
+  //# create a new array by spread operator .
+  let sortedProducts = [...products];
 
-app.get("/", (req, res) => {
-  res.send("Home");
-});
-app.get("/about", (req, res) => {
-  res.send("About");
-});
+  // if (search) {
+  //   sortedProducts = sortedProducts.filter((product) => {
+  //     return product.name.startsWith(search);
+  //   });
+  // }
 
-app.get("/api/image", (req, res) => {
-  res.send("image");
-});
-app.get("/api/test", (req, res) => {
-  res.send("test");
-});
-app.get("/api/product", (req, res) => {
-  res.send("product");
+  // if (limit) {
+  //   sortedProducts = sortedProducts.slice(0, Number(limit));
+  // }
+  // if (sortedProducts.length < 1) {
+  //   // res.status(200).send('no products matched your search');
+  //   return res.status(200).json({ sucess: true, data: [] });
+  // }
+
+  res.status(200).json(sortedProducts);
 });
 
 app.listen(9000, () => {
