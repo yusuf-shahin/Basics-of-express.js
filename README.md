@@ -461,7 +461,9 @@ app.get("/api/products/1", (req, res) => {
 - everythings is okk! but we dont set the specific _url_ in everytime.
 - here comes the concept of **params** in express.
 
-## params (parameters )
+## Params in URL
+
+- parameters in Uniform Resource Locator
 
 #### **_params property :-_**
 
@@ -469,14 +471,14 @@ instead of hard coding this `/api/products/1`, `/api/products/2` , `/api/product
 
 **What is params in express js ?**
 
-- params object **allows you to capture dynamic values from the URL path.** It is useful when you have route patterns with placeholders, such as `“/products/:productId”` here **:productId** is the _route params_ .
+- params object **allows you to capture dynamic values from the URL path.** It is useful when you have route patterns with placeholders, such as `“/products/:productId”` here **:productId** is the _route params_ . **_params_ comes just after the colon mark -->.** `:`
 - `app.get("/api/products/:productID", (req, res) => {})`
 
 using **params** in browser _url_ :-`localhost:9000/users/abcd`
 
 ```js
 app.get("/api/products/:id", (req, res) => {
-  const id = req.params;
+  const { id } = req.params;
   console.log(id); //# --> "abcd"
 });
 ```
@@ -487,22 +489,34 @@ app.get("/api/products/:id", (req, res) => {
 
 **example in details :-**
 
+- in url we write `localhost:9000/api/products/yusuf`
+
 ```js
 app.get("/api/products/:productID", (req, res) => {
-  // in url we write "/api/products/yusuf"
-
-  // console.log(req.params) //# --> {productID : "yusuf"}
+  console.log(req.params);
   // console.log(req.params.productID) //# --> "yusuf"
-  // in url we write ==> "/api/products/1"
-  // console.log(req.params.productID) //# --> "1"
-  //# value of :productID it always be a string .
 
   //* same thing in obj destructering
   const { productID } = req.params;
 });
 ```
 
-**set the productId we can get the product and render it to browser**
+- in console we get `{productID : "yusuf"}` , here **productId** is the key and **"yusuf"** is the value
+
+same as in url we pass `localhost:9000/api/products/1` :-
+
+```js
+app.get("/api/products/:id", (req, res) => {
+  const { id } = req.params;
+  // in url we write ==> "/api/products/1"
+  //# value of :productID it always be a string .
+});
+```
+
+- in console we get `1`
+- value of _params_ it always be a string .
+
+**using we can render the product dynamically in browser**
 
 ```js
 app.get("/api/products/:productID", (req, res) => {
@@ -510,7 +524,7 @@ app.get("/api/products/:productID", (req, res) => {
 
   const singleProduct = products.find(
     (product) => product.id === Number(productID)
-    //# using Number() method coz "productID" is a string. or we can use double equal " == " in this code.
+    //# using Number() method coz "productID" is a string. or we can also use double equal " == " in this code.
   );
 
   //* if id dose not find
@@ -544,21 +558,6 @@ app.get("/api/products", (req, res) => {
 });
 
 app.get("/api/products/:productID", (req, res) => {
-  //? like ":productID" we can set any name in here. Name dose not matter . after "/api/products/" what  will we write . The value of :productID is automatically set.
-
-  //! for example :-
-  // in url we write "/api/products/yusuf"
-  console.log(req.params.productID);
-
-  // console.log(req.params) //# --> {productID : "yusuf"}
-  // console.log(req.params.productID) //# --> "yusuf"
-
-  //// same as
-  // in url we write "/api/products/1"
-  // console.log(req.params.productID) //# --> "1"
-  //# value of :productID it always a string
-
-  //* obj destructering
   const { productID } = req.params;
 
   const singleProduct = products.find(
@@ -582,6 +581,8 @@ app.listen(9000, () => {
 
 - in path we pass a lot _params_ as wish as we want .
 
+- in browser _url_ we pass `localhost:9000/api/products/4/reviews/yusuf`
+
 ```js
 app.get("/api/products/:productID/reviews/:reviewID", (req, res) => {
   console.log(req.params);
@@ -589,20 +590,22 @@ app.get("/api/products/:productID/reviews/:reviewID", (req, res) => {
 });
 ```
 
-- in browser _url_ we pass `localhost:9000/api/products/4/reviews/abc` that, console we see that `{productID : "4", reviewID : "abc"}`
+- console we see that `{productID : 4, reviewID : yusuf}`
 
-#### **_query string params_ (url parameters):-**
+#### **_query string params_ :-**
+
+- **(url parameters)**
 
 **What is a Query Parameter?**
 
-- A query string is, to put it simply, the portion of a **URL (Uniform Resource Locator) that comes just after the question mark ==>.** `?`
+- A query string is, to put it simply, the portion of a **URL (Uniform Resource Locator) that comes just after the question mark -->.** `?`
 
 **Example:**
 
 - This is an illustration of a URL with query strings of a blog website that requests blogs on page number 3 and limits the response to only 3 objects. `https://helloworldblogs.com/search?page=2&limit=3`
 
-limit and Page, which have values of 3 and 2, respectively, are actual key-value pairs that make up the express query params. like that :-
-![Relative](./Image/query-string-params.jpeg)
+- limit and Page, which have values of 3 and 2, respectively, are actual key-value pairs that make up the express query params. like that :-
+  ![Relative](./Image/query-string-params.jpeg)
 
 in _URL_ we pass `localhost:9000/api/v1/query?name=yusuf&id=7518`
 
@@ -624,16 +627,24 @@ app.listen(9000, () => {
 });
 ```
 
+- after `localhost:9000/api/v1/query` this paths everything is _query string_
+- in console we get `{name : "yusuf" , id : "7518"}`
+
+**Expline in Image**
+
 - **In browser url** we pass `localhost:9000/api/v1/query?name=yusuf&id=7518`
 
 ![Relative](./Image/browser-url-params.jpeg)
+
+- browser show us the result , because in url `localhost:9000/api/v1/query` path is correct . If this path was wrong browser show us error .
 
 in console we get :-
 
 ![Relative](./Image/console-url-params.jpeg)
 
-- in console we get `{name : "yusuf" , id : "7518"}`
-- here **name** and **id** is _key_ and **yusuf** and **7518** is the _value_
+- - here **name** and **id** is _key_ and **yusuf** and **7518** is the _value_
+
+- in url if we pass `localhost:9000/api/v1/query` or `localhost:9000/api/v1/query?` in console we get a empty object `{}`
 
 same we can set any `key=value` after `?` mark and get them by `req.query` property .
 
