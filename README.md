@@ -465,6 +465,8 @@ app.get("/api/products/1", (req, res) => {
 
 - parameters in Uniform Resource Locator
 
+- [**Difference between params anquery**](https://github.com/yusuf-shahin/Basics-of-express.js/tree/main/params%20and%20query#difference-between-params-and-query-strings-params)
+
 #### **_params property :-_**
 
 instead of hard coding this `/api/products/1`, `/api/products/2` , `/api/products/3` we setup **a route parameter**
@@ -636,7 +638,7 @@ app.listen(9000, () => {
 
 ![Relative](./Image/browser-url-params.jpeg)
 
-- browser show us the result , because in url `localhost:9000/api/v1/query` path is correct . If this path was wrong browser show us error .
+- browser it show us the result , because in url `localhost:9000/api/v1/query` path is correct . If this path was wrong browser show us error .
 
 in console we get :-
 
@@ -644,19 +646,29 @@ in console we get :-
 
 - - here **name** and **id** is _key_ and **yusuf** and **7518** is the _value_
 
-- in url if we pass `localhost:9000/api/v1/query` or `localhost:9000/api/v1/query?` in console we get a empty object `{}`
+- **in url if we pass `localhost:9000/api/v1/query` or `localhost:9000/api/v1/query?` in console we get a empty object `{}`**
 
 same we can set any `key=value` after `?` mark and get them by `req.query` property .
 
-- `const {name} =  req.query ` ==> we can get the _value_ of **name** _key_
+- `const {name} =  req.query ` --> we can get the _value_ of **name** _key_
 
 #### **_Middleware Function_**
 
-- express middleware are function that execute during the request the server . Each middleware function has access to **request and reaponse** object .
+![Relative](./Image/pic-middleware.webp)
+
+- express middleware are function that execute during the request the server . Each middleware function has access to **request and reaponse** object . `request --> middleware func --> response`
+
+**There are Three types of _middleware_ func :-**
+
+- **own middleware** --> create the middleware func in our code .
+- **express middleware** --> express provides quite a few built-in middleware functions. for example [app.use(express.static(./public))](https://github.com/yusuf-shahin/Basics-of-express.js/tree/main/simple%20express-js%20project) . Here `express.static(./public)` is build in express _middleware_ .
+- third pirty middleware --> [CLick this to learn more...](https://www.geeksforgeeks.org/how-to-use-third-party-middleware-in-express-js/)
 
 **Basic level**
 
 - [Learn more to click this article...](https://dev.to/m__mdy__m/middleware-in-expressjs-4b4)
+
+- **route** _middleware_ :-
 
 ```js
 const express = require("express");
@@ -664,7 +676,7 @@ const app = express();
 
 //  req ==> middleware ==> res
 
-//* logger function
+//* middleware function
 const logger = (req, res, next) => {
   const method = req.method;
   const url = req.url;
@@ -685,15 +697,19 @@ app.listen(9000, () => {
 });
 ```
 
-- create a logger function and pass it as the parameter of **get()** .
+- create a _own middleware_ logger function and pass it as the parameter of **get()** .
 - express supply three parameters in our _middleware_ **logger** function .
 - those parameters are **(req,res,next)** .
-- when we work with _middleware_ we also **res.send()** from it . It will properly work. or we pass it on next by invoking **next()** function .
-- in **localhost:9000**, everytime we refreash the browser we find `GET / 2024` in our console .
+- middleware is so powerful that , when we work with _middleware_ we also **res.send()** from it . It will work. We can do that or we pass it on next by invoking **next()** function .
+- in `localhost:9000`, everytime we refreash the browser, we get `GET / 2024` in our console .
+- `localhost:9000/about` , in browser we get `GET /about 2024` in our console .
 
-**_app.use()_**
+But the most common approach is pass the _middleware_ func inside **use()** method .
 
-- inside **app.use()** function we pass our all _middleware_
+** _app.use()_ method :-**
+
+- in every time pass the middleware func in hard for us .
+- inside **app.use()** function we pass our all _middleware_ function.
 
 ```js
 const express = require("express");
@@ -731,18 +747,18 @@ app.listen(9000, () => {
 });
 ```
 
-- in _url_ we write `localhost:9000/` , `localhost:9000/about` , `localhost:9000/aboutId` , `localhost:9000/api/image` , `localhost:9000/api/products/1` ,`localhost:9000/api/product` , `localhost:9000/api/image` , `localhost:9000/api/image`
+in browser _url_ we write `localhost:9000/` , `localhost:9000/about` , `localhost:9000/aboutId` , `localhost:9000/api/image` , `localhost:9000/api/products/1` ,`localhost:9000/api/product` , `localhost:9000/api/image` , `localhost:9000/api/image`
 
 **in console** we see that :-
 ![Relative](./Image/middleware.jpeg)
 
-We also pass the path in **use()** method :-
+We also pass the _path_ in **use()** method, like :-
 
 - `app.use("/api", logger);`
 
-- _middleware_ **logger** func will work after path `/api` .
+- _middleware_ **logger** func will work after path `/api/` .
 
-- the code after path `/api` pass in our use method :-
+- the code after path `/api/` pass in our use method :-
 
 ```js
 const express = require("express");
@@ -758,7 +774,7 @@ const logger = (req, res, next) => {
   next();
 };
 
-app.use("/api", logger);
+app.use("/api/", logger);
 
 app.get("/", (req, res) => {
   res.send("Home");
@@ -791,4 +807,151 @@ app.listen(9000, () => {
 
 - [**learn more...**](https://expressjs.com/en/4x/api.html#app.use)
 
-**_Multiple Middleware function :-_**
+**_Multiple Middleware function_ :-**
+
+- using array inside **use()** method, we can set multiple middleware func
+
+```js
+const express = require("express");
+const app = express();
+
+const logger = (req, res, next) => {
+  console.log("This is logger func...");
+  next();
+};
+
+//* authorize middleware
+const authorize = (req, res, next) => {
+  console.log("This is authorize func...");
+  next();
+};
+
+app.use([logger, authorize]);
+// api/home/about/products
+
+app.get("/", (req, res) => {
+  res.send("Home");
+});
+app.get("/about", (req, res) => {
+  res.send("About");
+});
+app.get("/api/products", (req, res) => {
+  res.send("Products");
+});
+app.get("/api/user", (req, res) => {
+  console.log(req.user);
+  res.send("user");
+});
+
+app.listen(9000, () => {
+  console.log("Server is listening on port 9000....");
+});
+```
+
+- every time we refreash the browser, in console we get :-
+
+```
+This is logger func...
+This is authorize func...
+```
+
+- the we pass two middleware func as array inside **use()** method, will always follow the order it is executed , first **logger** func then **authorize** func .
+- If we filp those two , first **authorize** func then **logger** func. in console we get :-
+
+```
+This is authorize func...
+This is logger func...
+```
+
+**_complecated example_ :-**
+
+- in browser _url_ we pass `http://localhost:9000/about/?user=yusuf`
+- **code**
+
+```js
+const express = require("express");
+const app = express();
+
+//* middleware func
+const logger = (req, res, next) => {
+  console.log(req.user);
+  next();
+};
+
+//* middleware func
+const authorize = (req, res, next) => {
+  const { user } = req.query;
+  if (user === "yusuf") {
+    req.user = { name: "shahin", id: 19 };
+    req.userDetails = {
+      name: "Yusuf Shahin",
+      job: "Web Developer",
+      location: "Noakhali",
+    };
+    console.log(req.url);
+    next();
+  } else {
+    res.status(401).send("Unauthorize");
+  }
+};
+
+app.use([authorize, logger]);
+
+//? get() method :-
+
+app.get("/", (req, res) => {
+  res.send("Home");
+});
+app.get("/about", (req, res) => {
+  console.log(req.userDetails);
+
+  res.send("About Yusuf Shahin");
+});
+app.get("/api/products", (req, res) => {
+  res.send("Products");
+});
+app.get("/api/user", (req, res) => {
+  console.log(req.user);
+  res.send("user");
+});
+
+app.listen(9000, () => {
+  console.log("Server is listening on port 9000....");
+});
+```
+
+- in that code , in _query string parameters_ we must must pass `?user=yusuf` . Because in _middleware authorize_ func we set the codition :- if **query string params** _key_ === user and _value_ === "yusuf" . Otherwise it always **send** the **response** _unauthorize_ .
+
+- if _query string parameters_ === `?user=yusuf` then we go our **logger** func . **logger** func indicate our _url path_ .
+
+- here come the most interesting thing . in browser we pass this `http://localhost:9000/about/?user=yusuf` _url_ :-
+
+- in console we get :-
+
+```js
+/about/?user=yusuf
+{ name: 'shahin', id: 19 }
+{ name: 'Yusuf Shahin', job: 'Web Developer', location: 'Noakhali' }
+```
+
+- `req.url`(authorize func) ---> `req.user()`(logger func) --> `req.userDetails`(app.get("/about"))
+
+![Relative](./Image/multiple-middleware-func.jpeg)
+
+- in browser :-
+
+![Relative](./Image/browser-multiple-middleware.jpeg.jpeg)
+
+**_Extra Info_**
+
+- passing middleware func to our all **app.get()** method, we use **app.use()** func and pass the middleware inside it. Or if we want pass the middleware specific path like `localhost:9000/api/user` . We set this _route_ middleware :-
+
+```js
+// comment out this :-
+// app.use([authorize, logger])
+
+app.get("/api/user", [authorize, logger], (req, res) => {
+  console.log(req.user);
+  res.send("user");
+});
+```
