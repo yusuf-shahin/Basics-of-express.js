@@ -42,7 +42,7 @@ server.listen(9000, () => {
 
 - [Click This Article to learn HTTP modules in details](https://www.freecodecamp.org/news/http-and-everything-you-need-to-know-about-it/)
 
-_**HTTP-Basics**_
+#### **HTTP-Basics**
 
 - http is a build module of node, it is avalavle in **node_modules** folder, so just import it in our project .
 - `const http = require('http')`
@@ -120,7 +120,7 @@ server.listen(9000, () => {
 - **Page not found , but still in _network_ everything is gonna ok**
 - Here come the concept of _HTTP Headers_ .
 
-**_HTTP Headers_**
+#### _HTTP Headers_
 
 - **writeHead()** property, introduced in Node.js v1.0. It is part of the 'http' module. It is **used to send a response header to the incoming request.** The status code represents a _**3-digit HTTP status code**_ (e.g., 404), and the headers parameter contains the response headers.
 
@@ -144,7 +144,7 @@ const server = http.createServer((req, res) => {
 
 - In the browser [localhost:9000](http://localhost:9000/) , any url we pass like `http://localhost:9000/about` or `http://localhost:9000/info` . The server always show us **Hello, This is Home Page**
 
-**_HTTP-Request-Object_**
+#### _HTTP-Request-Object_
 
 - `console.log(req.url); //# --> /`
 
@@ -212,10 +212,10 @@ const app = express();
 
 **in _app_ , we have a obj with banch of useful method**
 
-- app.get
-- app.post
-- app.put
-- app.delete
+- [app.get](https://www.geeksforgeeks.org/express-js-http-methods/#get-method)
+- [app.post](https://www.geeksforgeeks.org/express-js-http-methods/#post-method)
+- [app.put](https://www.geeksforgeeks.org/express-js-http-methods/#put-method)
+- [app.delete](https://www.geeksforgeeks.org/express-js-http-methods/#delete-method)
 - app.all ()
 - app.use
 - app.listen
@@ -662,7 +662,7 @@ same we can set any `key=value` after `?` mark and get them by `req.query` prope
 
 - **own middleware** --> create the middleware func in our code .
 - **express middleware** --> express provides quite a few built-in middleware functions. for example [app.use(express.static(./public))](https://github.com/yusuf-shahin/Basics-of-express.js/tree/main/simple%20express-js%20project) . Here `express.static(./public)` is build in express _middleware_ .
-- third pirty middleware --> [CLick this to learn more...](https://www.geeksforgeeks.org/how-to-use-third-party-middleware-in-express-js/)
+- **third pirty middleware** --> [CLick this to learn more...](https://www.geeksforgeeks.org/how-to-use-third-party-middleware-in-express-js/)
 
 **Basic level**
 
@@ -709,7 +709,7 @@ But the most common approach is pass the _middleware_ func inside **use()** meth
 ** _app.use()_ method :-**
 
 - in every time pass the middleware func in hard for us .
-- inside **app.use()** function we pass our all _middleware_ function.
+- inside **app.use()** function we apply our _middleware_ func in our all route.
 
 ```js
 const express = require("express");
@@ -940,7 +940,7 @@ app.listen(9000, () => {
 
 - in browser :-
 
-![Relative](./Image/browser-multiple-middleware.jpeg.jpeg)
+![Relative](./Image/browser-multiple-middleware.jpeg)
 
 **_Extra Info_**
 
@@ -955,3 +955,123 @@ app.get("/api/user", [authorize, logger], (req, res) => {
   res.send("user");
 });
 ```
+
+## POST method :-
+
+- do a mini project with post method .
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./normalize.css" />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>Traditional</title>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-center">
+        <h5>HTTP Methods</h5>
+        <div>
+          <a href="index.html">regular </a>
+          <a href="javascript.html">javascript </a>
+        </div>
+      </div>
+    </nav>
+    <main>
+      <form action="/login" method="POST">
+        <h3>Traditional Form</h3>
+        <div class="form-row">
+          <label for="name"> enter name </label>
+          <input type="text" name="name" id="name" autocomplete="false" />
+        </div>
+        <button type="submit" class="block">submit</button>
+      </form>
+    </main>
+  </body>
+</html>
+```
+
+In express.js :-
+
+```js
+const express = require("express");
+const app = express();
+const { people } = require("./data.js");
+
+//* all static code
+app.use(express.static("./methods-public"));
+
+app.listen(9000, () => {
+  console.log("Server is listening on port 9000....");
+});
+```
+
+- In browser we see this :-
+
+![Relative](./Image/app-form.jpeg)
+
+- **In that _HTML_ code our main part is** :-
+
+```html
+<form action="/login" method="POST">
+  <h3>Traditional Form</h3>
+  <div class="form-row">
+    <label for="name"> enter name </label>
+    <input type="text" name="name" id="name" autocomplete="false" />
+  </div>
+  <button type="submit" class="block">submit</button>
+</form>
+```
+
+- In _form_-tag `action is "/login"` and `method is "POST"`, so in `/login` url or we are submiting the form . Inside the form, we have input and a submit button.
+
+- If we type `yusuf` in input and click the submit button . the url is `http://localhost:9000/login` and we see the browser :-
+
+![relative](./Image/from-browser.jpeg)
+
+- If we inspect our **network** , we find that `Request Method is POST`
+
+![Relative](./Image/from-browser-network.jpeg)
+
+- In we click the **plyload** beside the **server** form-data :- `name: yusuf`
+
+![Relative](./Image/network-reqBody.jpeg)
+
+- In **HTML** in _form_-tag we provide a `name="name"` , here **name** is the key and **yusuf** is the value . We can set any key name instead of **name** . Suppose , in **HTML** form , if write `name="testing"` in form-data we get `testing: yusuf` .
+
+\*As our `method is "POST"` , so in express we write :-
+
+```js
+app.post("/login", (req, res) => {
+  res.send("Posting");
+});
+```
+
+- now we write `yusuf` in input and click the submit button . In browser we see **Posting** and our url is `http://localhost:9000/login`
+
+- inside `app.post()` method , if we `console.log(req.body);` in console we get `undefine` . For that reason in middleware we pass `app.use(express.urlencoded({ extended: false }));`
+
+![Relative](./Image/post-code.jpeg)
+
+- Now in console we get `[Object: null prototype] { name: 'yusuf' }`
+- What is express.urlencoded() Function ? [Click this](https://www.geeksforgeeks.org/express-js-express-urlencoded-function/)
+
+So in **app.post()** we can set that :-
+
+```js
+app.post("/login", (req, res) => {
+  // console.log(req.body); //# --> {name: "yusuf"}
+  const { name } = req.body;
+  if (name) {
+    res.status(200).send(`Welcome Mohammad ${name}`);
+  } else {
+    res.status(401).send("Confirm your name first");
+  }
+});
+```
+
+- using this code we show the name of **input** in our **browser**.

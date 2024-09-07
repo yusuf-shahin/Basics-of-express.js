@@ -1,38 +1,25 @@
 const express = require("express");
 const app = express();
-const { products } = require("./data.js");
+const { people } = require("./data.js");
 
-app.get("/api/v1/id", (req, res) => {
-  console.log(req.query);
+//* all static code
+app.use(express.static("./methods-public"));
+app.use(express.urlencoded({ extended: false }));
 
-  const { search, limit } = req.query;
-
-  //# create a new array by spread operator .
-  let sortedProducts = [...products];
-
-  if (search) {
-    sortedProducts = sortedProducts.filter((product) => {
-      return product.name.startsWith(search);
-    });
+app.post("/login", (req, res) => {
+  // console.log(req.body); //# --> {name: "yusuf"}
+  const { name } = req.body;
+  if (name) {
+    res.status(200).send(`Welcome Mohammad ${name}`);
+  } else {
+    res.status(401).send("Confirm your name first");
   }
-
-  if (limit) {
-    sortedProducts = sortedProducts.slice(0, Number(limit));
-  }
-  if (sortedProducts.length < 1) {
-    // res.status(200).send('no products matched your search');
-    return res.status(200).json({ sucess: true, data: [] });
-  }
-
-  res.status(200).json(sortedProducts);
-});
-
-app.get("/products/", (req, res) => {
-  const { productId } = req.query;
-  console.log(productId);
-  res.status(200).send("hello world");
 });
 
 app.listen(9000, () => {
   console.log("Server is listening on port 9000....");
 });
+
+// app.get("/api/people", (req, res) => {
+//   res.status(200).json({ success: true, data: people });
+// });

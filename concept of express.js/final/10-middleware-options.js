@@ -1,11 +1,13 @@
 const express = require("express");
 const app = express();
 
+//* middleware func
 const logger = (req, res, next) => {
   console.log(req.user);
   next();
 };
 
+// middleware func
 const authorize = (req, res, next) => {
   const { user } = req.query;
   if (user === "yusuf") {
