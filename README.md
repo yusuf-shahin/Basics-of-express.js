@@ -960,39 +960,34 @@ app.get("/api/user", [authorize, logger], (req, res) => {
 
 - do a mini project with post method .
 
+#### Methods - POST (Form Example)
+
+- send the HTTP request from _HTML_
+
+**(./methods-public)** ---> **index.html**
+
 ```html
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./normalize.css" />
-    <link rel="stylesheet" href="./styles.css" />
-    <title>Traditional</title>
-  </head>
-  <body>
-    <nav>
-      <div class="nav-center">
-        <h5>HTTP Methods</h5>
-        <div>
-          <a href="index.html">regular </a>
-          <a href="javascript.html">javascript </a>
-        </div>
+<body>
+  <nav>
+    <div class="nav-center">
+      <h5>HTTP Methods</h5>
+      <div>
+        <a href="index.html">regular </a>
+        <a href="javascript.html">javascript </a>
       </div>
-    </nav>
-    <main>
-      <form action="/login" method="POST">
-        <h3>Traditional Form</h3>
-        <div class="form-row">
-          <label for="name"> enter name </label>
-          <input type="text" name="name" id="name" autocomplete="false" />
-        </div>
-        <button type="submit" class="block">submit</button>
-      </form>
-    </main>
-  </body>
-</html>
+    </div>
+  </nav>
+  <main>
+    <form action="/login" method="POST">
+      <h3>Traditional Form</h3>
+      <div class="form-row">
+        <label for="name"> enter name </label>
+        <input type="text" name="name" id="name" autocomplete="false" />
+      </div>
+      <button type="submit" class="block">submit</button>
+    </form>
+  </main>
+</body>
 ```
 
 In express.js :-
@@ -1027,7 +1022,7 @@ app.listen(9000, () => {
 </form>
 ```
 
-- In _form_-tag `action is "/login"` and `method is "POST"`, so in `/login` url or we are submiting the form . Inside the form, we have input and a submit button.
+- In **HTML** _form_-tag `action is "/login"` and `method is "POST"`, so in `/login` url or we are submiting the form . Inside the form, we have input and a submit button.
 
 - If we type `yusuf` in input and click the submit button . the url is `http://localhost:9000/login` and we see the browser :-
 
@@ -1041,9 +1036,9 @@ app.listen(9000, () => {
 
 ![Relative](./Image/network-reqBody.jpeg)
 
-- In **HTML** in _form_-tag we provide a `name="name"` , here **name** is the key and **yusuf** is the value . We can set any key name instead of **name** . Suppose , in **HTML** form , if write `name="testing"` in form-data we get `testing: yusuf` .
+- In **HTML** in _form_-tag we provide a `name="name"` , here **name** is the _key_ and **yusuf** is the _value_ . We can set any _key-name_ instead of **name** . Suppose , in **HTML** form , if write `name="testing"` in form-data we get `testing: yusuf` .
 
-\*As our `method is "POST"` , so in express we write :-
+As our `method is "POST"` , so in express we write :-
 
 ```js
 app.post("/login", (req, res) => {
@@ -1051,14 +1046,14 @@ app.post("/login", (req, res) => {
 });
 ```
 
-- now we write `yusuf` in input and click the submit button . In browser we see **Posting** and our url is `http://localhost:9000/login`
+- now we write `yusuf` in input and click the submit button . After clicking **submit** button , it took us in that _url_ ---> `http://localhost:9000/login` and browser show us **Posting** .
 
-- inside `app.post()` method , if we `console.log(req.body);` in console we get `undefine` . For that reason in middleware we pass `app.use(express.urlencoded({ extended: false }));`
+- inside `app.post()` method , if we write `console.log(req.body);` in console we get `undefine` . For that reason in middleware we pass `app.use(express.urlencoded({ extended: false }))` .
 
 ![Relative](./Image/post-code.jpeg)
 
 - Now in console we get `[Object: null prototype] { name: 'yusuf' }`
-- What is express.urlencoded() Function ? [Click this](https://www.geeksforgeeks.org/express-js-express-urlencoded-function/)
+- What is **express.urlencoded()** Function ? [Click this to learn details...](https://www.geeksforgeeks.org/express-js-express-urlencoded-function/)
 
 So in **app.post()** we can set that :-
 
@@ -1074,4 +1069,87 @@ app.post("/login", (req, res) => {
 });
 ```
 
-- using this code we show the name of **input** in our **browser**.
+- using this code we show the name that is _typing_ **input** in our **browser**.
+- in we inspect and **network** --> **headers** --> **request headers** --> **content-type: application/x-www-form-urlencoded** because in middleware we pass `app.use(express.urlencoded({ extended: false }));`
+
+#### Methods - POST (javascript Example)
+
+In this case, it's gonna be done strictly using JavaScript and we'll use JavaScript to send our HTTP requests.
+
+in **./methods-public** folder ---> **javascript.html** file
+
+```html
+<main>
+  <section>
+    <form>
+      <h3>Javascript Form</h3>
+      <div class="form-row">
+        <label for="name"> enter name </label>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          class="form-input"
+          autocomplete="false"
+        />
+        <small class="form-alert"></small>
+      </div>
+      <button type="submit" class="block submit-btn">submit</button>
+    </form>
+    <div class="result"></div>
+  </section>
+</main>
+```
+
+- In that case we dont have the `action=""` and `method=""` in the **HTML** _form_-tag but in _input_ we have `name` attribute.
+
+**Using front-end** we fatch people from server .
+
+CDN link of AXIOS Library in _HTML_ ...
+
+```js
+<script
+  src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js'
+  integrity='sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=='
+  crossorigin='anonymous'
+></script>
+```
+
+- In _HTML_ `<div class="result"></div>` we want to show the data .
+
+so ,
+
+```js
+const result = document.querySelector(".result");
+
+//* this funcion fatching the people from server
+const fetchPeople = async () => {
+  try {
+    //# fetch data from '/api/people' which is create in app.js . so make sure this api gonna mathch
+    //# in app.js --> app.get('/api/people', (req,res) => {
+    // res.status(200).json({ success: true, data: people })
+    // })
+    const { data } = await axios.get("/api/people");
+    console.log(data); //* data = {success: true, data: Array(5)}
+
+    const people = data.data.map((person) => {
+      return `<h5>${person.name}</h5>`;
+    });
+    result.innerHTML = people.join("");
+  } catch (error) {
+    result.innerHTML = `<div class="alert alert-danger">Can't Fetch Data</div>`;
+  }
+};
+fetchPeople();
+```
+
+- here we fatch data from server `/api/people` , in app.js we already create this :-
+
+```js
+const { people } = require("./data.js");
+app.get("/api/people", (req, res) => {
+  res.status(200).json({ success: true, data: people });
+});
+```
+
+- as we fetch data from `/api/people` this url so, `axios.get("/api/people")` and `app.get("/api/people", (req, res) => {})` gonna match with each other
