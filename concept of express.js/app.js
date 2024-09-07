@@ -24,6 +24,10 @@ app.post("/api/people", (req, res) => {
   res.status(201).json({ success: true, person: name });
 });
 
+//! here previous code, app.get() and app.post() both of that url are same but method are different
+//? app.get() --> I'm reading data from API people.
+//? app.get() --> I'm actually trying to add data.
+
 //* traditional form
 app.post("/login", (req, res) => {
   // console.log(req.body); //# --> {name: "yusuf"}

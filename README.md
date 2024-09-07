@@ -1119,28 +1119,26 @@ CDN link of AXIOS Library in _HTML_ ...
 
 so ,
 
-```js
-const result = document.querySelector(".result");
+```html
+<script>
+  const result = document.querySelector(".result");
 
-//* this funcion fatching the people from server
-const fetchPeople = async () => {
-  try {
-    //# fetch data from '/api/people' which is create in app.js . so make sure this api gonna mathch
-    //# in app.js --> app.get('/api/people', (req,res) => {
-    // res.status(200).json({ success: true, data: people })
-    // })
-    const { data } = await axios.get("/api/people");
-    console.log(data); //* data = {success: true, data: Array(5)}
+  //* this funcion fatching the people from server
+  const fetchPeople = async () => {
+    try {
+      const { data } = await axios.get("/api/people");
+      console.log(data); //* data = {success: true, data: Array(5)}
 
-    const people = data.data.map((person) => {
-      return `<h5>${person.name}</h5>`;
-    });
-    result.innerHTML = people.join("");
-  } catch (error) {
-    result.innerHTML = `<div class="alert alert-danger">Can't Fetch Data</div>`;
-  }
-};
-fetchPeople();
+      const people = data.data.map((person) => {
+        return `<h5>${person.name}</h5>`;
+      });
+      result.innerHTML = people.join("");
+    } catch (error) {
+      result.innerHTML = `<div class="alert alert-danger">Can't Fetch Data</div>`;
+    }
+  };
+  fetchPeople();
+</script>
 ```
 
 - here we fatch data from server `/api/people` , in app.js we already create this :-
@@ -1152,4 +1150,54 @@ app.get("/api/people", (req, res) => {
 });
 ```
 
-- as we fetch data from `/api/people` this url so, `axios.get("/api/people")` and `app.get("/api/people", (req, res) => {})` gonna match with each other
+- as we fetch data from `/api/people` this url so, `axios.get("/api/people")` and `app.get("/api/people", (req, res) => {})` gonna match with each other.
+- we just show the data, but we dont show nothing dynamically.
+
+**Write any thing in _input_ and show it to the to In _HTML_ `<div class="result"></div>` .**
+
+in javascript html :-
+**click submit button (javascript form)**
+
+```html
+<script>
+  //* submit form (click the button)
+  const btn = document.querySelector(".submit-btn");
+  const input = document.querySelector(".form-input");
+  const formAlert = document.querySelector(".form-alert");
+  btn.addEventListener("click", async (e) => {
+    e.preventDefault();
+    const nameValue = input.value;
+
+    try {
+      const { data } = await axios.post("/api/people", { name: nameValue });
+      const h5 = document.createElement("h5");
+      h5.textContent = data.person;
+      result.appendChild(h5);
+    } catch (error) {
+      // console.log(error.response)
+      formAlert.textContent = error.response.data.msg;
+    }
+    input.value = "";
+  });
+</script>
+```
+
+**In app.js**
+
+```js
+app.post("/api/people", (req, res) => {
+  const { name } = req.body;
+  if (!name) {
+    return res
+      .status(400)
+      .json({ success: false, msg: "please provide name value" });
+  }
+  res.status(201).json({ success: true, person: name });
+});
+```
+
+**In browser _input_ we write --> `Forhad` , `Mazhar` and last we write nothing. just pass empty _input_ .**
+
+![Relative](./Image/kocotopo.jpeg)
+
+- in **network** first two time we get `people` and our status code is `201` and last time we get aslo `people` but our status code is `400` .
