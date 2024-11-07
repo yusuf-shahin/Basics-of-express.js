@@ -28,7 +28,10 @@ app.post("/api/people", (req, res) => {
 //? app.get() --> I'm reading data from API people.
 //? app.get() --> I'm actually trying to add data.
 
+//! ==============
 //* traditional form
+//! ==============
+
 app.post("/login", (req, res) => {
   // console.log(req.body); //# --> {name: "yusuf"}
   const { name } = req.body;
