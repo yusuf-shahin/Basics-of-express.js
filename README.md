@@ -2,6 +2,8 @@
 
 - _Domain_ : **localhost:9000**
 
+#### [Skip the HTTP click here](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#expree-js)
+
 **Simple introduction of _HTTP module_ and _express js_ **
 
 ```js
@@ -9,31 +11,31 @@
 //? express js :
 //! ===============
 
-const express = require("express");
-const app = express();
+const express = require("express")
+const app = express()
 
 app.get("/", (req, res) => {
-  res.send("<h1>Hello world</h1>");
-});
+  res.send("<h1>Hello world</h1>")
+})
 
 app.listen(9000, () => {
-  console.log("Example app listening on port 9000");
-});
+  console.log("Example app listening on port 9000")
+})
 
 // ! ===============
 //? same thing using HTTP modules
 // ! ===============
 
-const http = require("http");
+const http = require("http")
 
 const server = http.createServer((req, res) => {
-  res.write("<h1>hello people</h1>");
-  res.end();
-});
+  res.write("<h1>hello people</h1>")
+  res.end()
+})
 
 server.listen(9000, () => {
-  console.log("Example app listening on port 9000");
-});
+  console.log("Example app listening on port 9000")
+})
 ```
 
 ### Introduction to HTTP :-
@@ -60,17 +62,17 @@ server.listen(9000, () => {
 _**http.createServer() Example :-**_
 
 ```js
-const http = require("http");
+const http = require("http")
 const server = http.createServer((req, res) => {
-  console.log("user hit the server");
+  console.log("user hit the server")
   //# every time when we refreash our browser, in console we see this message
-  res.write("Hello this is my Home page");
-  res.end();
-});
+  res.write("Hello this is my Home page")
+  res.end()
+})
 
 server.listen(9000, () => {
-  console.log("Example app listening on port 9000");
-});
+  console.log("Example app listening on port 9000")
+})
 ```
 
 - **localhost:9000**
@@ -81,32 +83,32 @@ server.listen(9000, () => {
 const server = http.createServer((req, res) => {
   // console.log(req.method); //# --> GET
   // console.log(req.url); //# --> /
-  const url = req.url;
+  const url = req.url
 
   // in url "http://localhost:5000/about/yusuf"
   // console.log(req.url); //# --> /about/yusuf
 
   // home page
   if (url === "/") {
-    res.write("<h1>home page</h1>");
-    res.end();
+    res.write("<h1>home page</h1>")
+    res.end()
   }
   // about page
   else if (url === "/about") {
-    res.write("<h1>about page</h1>");
-    res.end();
+    res.write("<h1>about page</h1>")
+    res.end()
   }
 
   // 404
   else {
-    res.write("<h1>page not found</h1>");
-    res.end();
+    res.write("<h1>page not found</h1>")
+    res.end()
   }
-});
+})
 
 server.listen(9000, () => {
-  console.log("Example app listening on port 9000");
-});
+  console.log("Example app listening on port 9000")
+})
 ```
 
 - **here, in _url_ if we write `http://localhost:9000/undefine` , borwser show us :-**
@@ -149,38 +151,38 @@ const server = http.createServer((req, res) => {
 - `console.log(req.url); //# --> /`
 
 ```js
-const http = require("http");
+const http = require("http")
 
 const server = http.createServer((req, res) => {
   // console.log(req.method); //# --> GET
-  console.log(req.url); //# --> /
+  console.log(req.url) //# --> /
 
   // in url "http://localhost:9000/about/yusuf"
   // console.log(req.url); //# --> /about/yusuf
 
   // home page
   if (url === "/") {
-    res.writeHead(200, { "content-type": "text/html" });
-    res.write("<h1>home page</h1>");
-    res.end();
+    res.writeHead(200, { "content-type": "text/html" })
+    res.write("<h1>home page</h1>")
+    res.end()
   }
 
   // about page
   else if (url === "/about") {
-    res.writeHead(200, { "content-type": "text/html" });
-    res.write("<h1>about page</h1>");
-    res.end();
+    res.writeHead(200, { "content-type": "text/html" })
+    res.write("<h1>about page</h1>")
+    res.end()
   }
 
   // 404
   else {
-    res.writeHead(404, { "content-type": "text/html" });
-    res.write("<h1>page not found</h1>");
-    res.end();
+    res.writeHead(404, { "content-type": "text/html" })
+    res.write("<h1>page not found</h1>")
+    res.end()
   }
-});
+})
 
-server.listen(9000);
+server.listen(9000)
 ```
 
 - to see the information from browser
@@ -194,7 +196,7 @@ _**When browser do not find the url :-**_
 
 ![Relative](./Image/error-file.jfif)
 
-**[Simple HTTP module navbar project]**(https://github.com/yusuf-shahin/Basics-of-node-js/tree/main/simple%20http%20modules%20project)
+[**Simple HTTP module navbar project**](https://github.com/yusuf-shahin/Basics-of-node-js/tree/main/simple%20http%20modules%20project)
 
 ## Expree JS
 
@@ -206,8 +208,8 @@ _**When browser do not find the url :-**_
 _**Import this in our project**_
 
 ```js
-const express = require("express");
-const app = express();
+const express = require("express")
+const app = express()
 ```
 
 **in _app_ , we have a obj with banch of useful method**
@@ -228,12 +230,12 @@ const app = express();
 **Building a Server with Express and show it to browser :-**
 
 ```js
-const express = require("express");
-const app = express();
+const express = require("express")
+const app = express()
 
-app.get("/", (req, res) => res.send("Hello World!"));
+app.get("/", (req, res) => res.send("Hello World!"))
 
-app.listen(9000, () => console.log("Example app listening on port 9000!"));
+app.listen(9000, () => console.log("Example app listening on port 9000!"))
 ```
 
 - `app.get` that is the HTTP method, that all browser perform by default .
@@ -247,8 +249,8 @@ app.listen(9000, () => console.log("Example app listening on port 9000!"));
 
 ```js
 app.all("*", (req, res) => {
-  res.send("<h1>resource not found</h1>");
-});
+  res.send("<h1>resource not found</h1>")
+})
 ```
 
 - we also send **status()** method before **send()**
@@ -260,63 +262,63 @@ app.all("*", (req, res) => {
 **Instead of this code :-**
 
 ```js
-const http = require("http");
+const http = require("http")
 const server = http.createServer((req, res) => {
   // console.log(req.method); //# --> GET
-  console.log(req.url); //# --> /
+  console.log(req.url) //# --> /
 
   // in url "http://localhost:9000/about/yusuf"
   // console.log(req.url); //# --> /about/yusuf
 
-  const url = req.url;
+  const url = req.url
   // home page
   if (url === "/") {
-    res.writeHead(200, { "content-type": "text/html" });
-    res.write("<h1>home page</h1>");
-    res.end();
+    res.writeHead(200, { "content-type": "text/html" })
+    res.write("<h1>home page</h1>")
+    res.end()
   }
   // about page
   else if (url === "/about") {
-    res.writeHead(200, { "content-type": "text/html" });
-    res.write("<h1>about page</h1>");
-    res.end();
+    res.writeHead(200, { "content-type": "text/html" })
+    res.write("<h1>about page</h1>")
+    res.end()
   }
   // 404
   else {
-    res.writeHead(404, { "content-type": "text/html" });
-    res.write("<h1>page not found</h1>");
-    res.end();
+    res.writeHead(404, { "content-type": "text/html" })
+    res.write("<h1>page not found</h1>")
+    res.end()
   }
-});
+})
 
-server.listen(9000);
+server.listen(9000)
 ```
 
 **We can do this by using _Express_ :-**
 
 ```js
-const express = require("express");
+const express = require("express")
 
-const app = express();
+const app = express()
 
 app.get("/", (req, res) => {
-  res.status(200).send("<h1>About Page</h1>");
-});
+  res.status(200).send("<h1>About Page</h1>")
+})
 
 app.get("/about", (req, res) => {
-  res.status(200).send("<h1>About Page</h1>");
-});
+  res.status(200).send("<h1>About Page</h1>")
+})
 
 // just like else
 app.all("*", (req, res) => {
-  res.status(404).send("<h1>resource not found</h1>");
-});
+  res.status(404).send("<h1>resource not found</h1>")
+})
 
 app.listen(9000, () => {
-  console.log("server is listening on port 9000...");
-});
+  console.log("server is listening on port 9000...")
+})
 
-app.listen(9000);
+app.listen(9000)
 ```
 
 - we dont need to create a server like **HTTP** module.
@@ -332,19 +334,19 @@ app.listen(9000);
 - The parameter can be any JSON type, including object, array, string, Boolean, number, or null, and you can also use it to convert other values to JSON.
 
 ```js
-const express = require("express");
-const app = express();
+const express = require("express")
+const app = express()
 app.get("/", (req, res) => {
   //# sent json file
   res.status(200).json([
     { name: "yusuf", age: 30 },
     { name: "nazmul", age: 25 },
-  ]);
-});
+  ])
+})
 
 app.listen(9000, () => {
-  console.log("Server is listening on port 9000....");
-});
+  console.log("Server is listening on port 9000....")
+})
 ```
 
 **_Also we gonna do this_**
@@ -385,24 +387,24 @@ const products = [
     price: 9.99,
     desc: `I'm baby direct trade farm-to-table hell of, YOLO readymade raw denim venmo whatever organic gluten-free kitsch schlitz irony af flexitarian.`,
   },
-];
-module.exports = { products };
+]
+module.exports = { products }
 ```
 
 **import that _data.js_ module and show them to browser**
 
 ```js
-const express = require("express");
-const app = express();
+const express = require("express")
+const app = express()
 //# product in data.js
-const { products } = require("./data");
+const { products } = require("./data")
 app.get("/", (req, res) => {
-  res.status(200).json(products);
-});
+  res.status(200).json(products)
+})
 
 app.listen(9000, () => {
-  console.log("Server is listening on port 9000....");
-});
+  console.log("Server is listening on port 9000....")
+})
 ```
 
 **in browser we see this**
@@ -414,29 +416,29 @@ app.listen(9000, () => {
 **We also modify the json file and show it to browser :-**
 
 ```js
-const express = require("express");
-const app = express();
+const express = require("express")
+const app = express()
 //# product in data.js
-const { products } = require("./data");
+const { products } = require("./data")
 app.get("/", (req, res) => {
   //# sent html file :-
-  res.send('<h1> Home Page</h1><a href="/api/products">products</a>');
+  res.send('<h1> Home Page</h1><a href="/api/products">products</a>')
   //# create a anchor tag to show our json file
-});
+})
 
 app.get("/api/products", (req, res) => {
   //# create a new modidy array of obj and name it show product...
   const newProducts = products.map((product) => {
-    const { id, name, price } = product;
+    const { id, name, price } = product
     //# return id, name, price as object...
-    return { name, id, price };
-  });
-  res.status(200).send(newProducts);
-});
+    return { name, id, price }
+  })
+  res.status(200).send(newProducts)
+})
 
 app.listen(9000, () => {
-  console.log("Server is listening on port 9000....");
-});
+  console.log("Server is listening on port 9000....")
+})
 ```
 
 - in here we just see **name, id , price** list of products in our browser.
@@ -448,10 +450,10 @@ simple system to render the **single product**...
 ```js
 app.get("/api/products/1", (req, res) => {
   const singleProduct = products.find((product) => {
-    return product.id === 1;
-  });
-  res.status(200).send(singleProduct);
-});
+    return product.id === 1
+  })
+  res.status(200).send(singleProduct)
+})
 ```
 
 **_"/api/products/1"_ use this url , we can render this product in browser.**
@@ -480,9 +482,9 @@ using **params** in browser _url_ :-`localhost:9000/users/abcd`
 
 ```js
 app.get("/api/products/:id", (req, res) => {
-  const { id } = req.params;
-  console.log(id); //# --> "abcd"
-});
+  const { id } = req.params
+  console.log(id) //# --> "abcd"
+})
 ```
 
 - in console we get `abcd`
@@ -495,12 +497,12 @@ app.get("/api/products/:id", (req, res) => {
 
 ```js
 app.get("/api/products/:productID", (req, res) => {
-  console.log(req.params);
+  console.log(req.params)
   // console.log(req.params.productID) //# --> "yusuf"
 
   //* same thing in obj destructering
-  const { productID } = req.params;
-});
+  const { productID } = req.params
+})
 ```
 
 - in console we get `{productID : "yusuf"}` , here **productId** is the key and **"yusuf"** is the value
@@ -509,10 +511,10 @@ same as in url we pass `localhost:9000/api/products/1` :-
 
 ```js
 app.get("/api/products/:id", (req, res) => {
-  const { id } = req.params;
+  const { id } = req.params
   // in url we write ==> "/api/products/1"
   //# value of :productID it always be a string .
-});
+})
 ```
 
 - in console we get `1`
@@ -522,61 +524,61 @@ app.get("/api/products/:id", (req, res) => {
 
 ```js
 app.get("/api/products/:productID", (req, res) => {
-  const { productID } = req.params;
+  const { productID } = req.params
 
   const singleProduct = products.find(
     (product) => product.id === Number(productID)
     //# using Number() method coz "productID" is a string. or we can also use double equal " == " in this code.
-  );
+  )
 
   //* if id dose not find
   if (!singleProduct) {
-    return res.status(404).send("<h1>Product Does Not Exist</h1>");
+    return res.status(404).send("<h1>Product Does Not Exist</h1>")
   }
 
-  return res.json(singleProduct);
-});
+  return res.json(singleProduct)
+})
 ```
 
 **All thing in one code :-**
 
 ```js
-const express = require("express");
-const app = express();
+const express = require("express")
+const app = express()
 //# product in data.js
-const { products } = require("./data");
+const { products } = require("./data")
 app.get("/", (req, res) => {
   //# sent html file :-
-  res.send('<h1> Home Page</h1><a href="/api/products">products</a>');
-});
+  res.send('<h1> Home Page</h1><a href="/api/products">products</a>')
+})
 
 app.get("/api/products", (req, res) => {
   const newProducts = products.map((product) => {
-    const { id, name, price } = product;
+    const { id, name, price } = product
     //# return id, name, price as object...
-    return { name, id, price };
-  });
-  res.status(200).send(newProducts);
-});
+    return { name, id, price }
+  })
+  res.status(200).send(newProducts)
+})
 
 app.get("/api/products/:productID", (req, res) => {
-  const { productID } = req.params;
+  const { productID } = req.params
 
   const singleProduct = products.find(
     (product) => product.id === Number(productID)
-  );
+  )
 
   //* if id dose not find
   if (!singleProduct) {
-    return res.status(404).send("Product Does Not Exist");
+    return res.status(404).send("Product Does Not Exist")
   }
 
-  return res.json(singleProduct);
-});
+  return res.json(singleProduct)
+})
 
 app.listen(9000, () => {
-  console.log("Server is listening on port 9000....");
-});
+  console.log("Server is listening on port 9000....")
+})
 ```
 
 **Extra information :-**
@@ -587,9 +589,9 @@ app.listen(9000, () => {
 
 ```js
 app.get("/api/products/:productID/reviews/:reviewID", (req, res) => {
-  console.log(req.params);
-  res.send("hello world");
-});
+  console.log(req.params)
+  res.send("hello world")
+})
 ```
 
 - console we see that `{productID : 4, reviewID : yusuf}`
@@ -614,19 +616,19 @@ in _URL_ we pass `localhost:9000/api/v1/query?name=yusuf&id=7518`
 on **app.js**
 
 ```js
-const express = require("express");
-const app = express();
-const { products } = require("./data.js");
+const express = require("express")
+const app = express()
+const { products } = require("./data.js")
 
 app.get("/api/v1/query", (req, res) => {
-  console.log(req.query);
+  console.log(req.query)
 
-  res.status(200).json(products);
-});
+  res.status(200).json(products)
+})
 
 app.listen(9000, () => {
-  console.log("Server is listening on port 9000....");
-});
+  console.log("Server is listening on port 9000....")
+})
 ```
 
 - after `localhost:9000/api/v1/query` this paths everything is _query string_
@@ -671,30 +673,30 @@ same we can set any `key=value` after `?` mark and get them by `req.query` prope
 - **route** _middleware_ :-
 
 ```js
-const express = require("express");
-const app = express();
+const express = require("express")
+const app = express()
 
 //  req ==> middleware ==> res
 
 //* middleware function
 const logger = (req, res, next) => {
-  const method = req.method;
-  const url = req.url;
-  const time = new Date().getFullYear();
-  console.log(method, url, time);
-  next();
-};
+  const method = req.method
+  const url = req.url
+  const time = new Date().getFullYear()
+  console.log(method, url, time)
+  next()
+}
 
 app.get("/", logger, (req, res) => {
-  res.send("Home");
-});
+  res.send("Home")
+})
 app.get("/about", logger, (req, res) => {
-  res.send("About");
-});
+  res.send("About")
+})
 
 app.listen(9000, () => {
-  console.log("Server is listening on port 9000....");
-});
+  console.log("Server is listening on port 9000....")
+})
 ```
 
 - create a _own middleware_ logger function and pass it as the parameter of **get()** .
@@ -712,39 +714,39 @@ But the most common approach is pass the _middleware_ func inside **use()** meth
 - inside **app.use()** function we apply our _middleware_ func in our all route.
 
 ```js
-const express = require("express");
-const app = express();
+const express = require("express")
+const app = express()
 
 //  req ==> middleware ==> res
 
 const logger = (req, res, next) => {
-  const method = req.method;
-  const url = req.url;
-  const time = new Date().getFullYear();
-  console.log(method, url, time);
+  const method = req.method
+  const url = req.url
+  const time = new Date().getFullYear()
+  console.log(method, url, time)
   // res.send("middleware teasting")
-  next();
-};
+  next()
+}
 
 //* middleware use() func
-app.use(logger);
+app.use(logger)
 
 app.get("/", (req, res) => {
-  res.send("Home");
-});
+  res.send("Home")
+})
 app.get("/image", (req, res) => {
-  res.send("About");
-});
+  res.send("About")
+})
 app.get("/test", (req, res) => {
-  res.send("About");
-});
+  res.send("About")
+})
 app.get("/about", (req, res) => {
-  res.send("About");
-});
+  res.send("About")
+})
 
 app.listen(9000, () => {
-  console.log("Server is listening on port 9000....");
-});
+  console.log("Server is listening on port 9000....")
+})
 ```
 
 in browser _url_ we write `localhost:9000/` , `localhost:9000/about` , `localhost:9000/aboutId` , `localhost:9000/api/image` , `localhost:9000/api/products/1` ,`localhost:9000/api/product` , `localhost:9000/api/image` , `localhost:9000/api/image`
@@ -761,41 +763,41 @@ We also pass the _path_ in **use()** method, like :-
 - the code after path `/api/` pass in our use method :-
 
 ```js
-const express = require("express");
-const app = express();
+const express = require("express")
+const app = express()
 
 //  req ==> middleware ==> res
 const logger = (req, res, next) => {
-  const method = req.method;
-  const url = req.url;
-  const time = new Date().getFullYear();
-  console.log(method, url, time);
+  const method = req.method
+  const url = req.url
+  const time = new Date().getFullYear()
+  console.log(method, url, time)
   // res.send("middleware teasting")
-  next();
-};
+  next()
+}
 
-app.use("/api/", logger);
+app.use("/api/", logger)
 
 app.get("/", (req, res) => {
-  res.send("Home");
-});
+  res.send("Home")
+})
 app.get("/about", (req, res) => {
-  res.send("About");
-});
+  res.send("About")
+})
 
 app.get("/api/image", (req, res) => {
-  res.send("image");
-});
+  res.send("image")
+})
 app.get("/api/test", (req, res) => {
-  res.send("test");
-});
+  res.send("test")
+})
 app.get("/api/product", (req, res) => {
-  res.send("product");
-});
+  res.send("product")
+})
 
 app.listen(9000, () => {
-  console.log("Server is listening on port 9000....");
-});
+  console.log("Server is listening on port 9000....")
+})
 ```
 
 - in _url_ we write `localhost:9000/` , `localhost:9000/about` , `localhost:9000/aboutId` , `localhost:9000/api/image` , `localhost:9000/api/products/1` ,`localhost:9000/api/product` , `localhost:9000/api/image` , `localhost:9000/api/image`
@@ -812,40 +814,40 @@ app.listen(9000, () => {
 - using array inside **use()** method, we can set multiple middleware func
 
 ```js
-const express = require("express");
-const app = express();
+const express = require("express")
+const app = express()
 
 const logger = (req, res, next) => {
-  console.log("This is logger func...");
-  next();
-};
+  console.log("This is logger func...")
+  next()
+}
 
 //* authorize middleware
 const authorize = (req, res, next) => {
-  console.log("This is authorize func...");
-  next();
-};
+  console.log("This is authorize func...")
+  next()
+}
 
-app.use([logger, authorize]);
+app.use([logger, authorize])
 // api/home/about/products
 
 app.get("/", (req, res) => {
-  res.send("Home");
-});
+  res.send("Home")
+})
 app.get("/about", (req, res) => {
-  res.send("About");
-});
+  res.send("About")
+})
 app.get("/api/products", (req, res) => {
-  res.send("Products");
-});
+  res.send("Products")
+})
 app.get("/api/user", (req, res) => {
-  console.log(req.user);
-  res.send("user");
-});
+  console.log(req.user)
+  res.send("user")
+})
 
 app.listen(9000, () => {
-  console.log("Server is listening on port 9000....");
-});
+  console.log("Server is listening on port 9000....")
+})
 ```
 
 - every time we refreash the browser, in console we get :-
@@ -869,55 +871,55 @@ This is logger func...
 - **code**
 
 ```js
-const express = require("express");
-const app = express();
+const express = require("express")
+const app = express()
 
 //* middleware func
 const logger = (req, res, next) => {
-  console.log(req.user);
-  next();
-};
+  console.log(req.user)
+  next()
+}
 
 //* middleware func
 const authorize = (req, res, next) => {
-  const { user } = req.query;
+  const { user } = req.query
   if (user === "yusuf") {
-    req.user = { name: "shahin", id: 19 };
+    req.user = { name: "shahin", id: 19 }
     req.userDetails = {
       name: "Yusuf Shahin",
       job: "Web Developer",
       location: "Noakhali",
-    };
-    console.log(req.url);
-    next();
+    }
+    console.log(req.url)
+    next()
   } else {
-    res.status(401).send("Unauthorize");
+    res.status(401).send("Unauthorize")
   }
-};
+}
 
-app.use([authorize, logger]);
+app.use([authorize, logger])
 
 //? get() method :-
 
 app.get("/", (req, res) => {
-  res.send("Home");
-});
+  res.send("Home")
+})
 app.get("/about", (req, res) => {
-  console.log(req.userDetails);
+  console.log(req.userDetails)
 
-  res.send("About Yusuf Shahin");
-});
+  res.send("About Yusuf Shahin")
+})
 app.get("/api/products", (req, res) => {
-  res.send("Products");
-});
+  res.send("Products")
+})
 app.get("/api/user", (req, res) => {
-  console.log(req.user);
-  res.send("user");
-});
+  console.log(req.user)
+  res.send("user")
+})
 
 app.listen(9000, () => {
-  console.log("Server is listening on port 9000....");
-});
+  console.log("Server is listening on port 9000....")
+})
 ```
 
 - in that code , in _query string parameters_ we must must pass `?user=yusuf` . Because in _middleware authorize_ func we set the codition :- if **query string params** _key_ === user and _value_ === "yusuf" . Otherwise it always **send** the **response** _unauthorize_ .
@@ -951,9 +953,9 @@ app.listen(9000, () => {
 // app.use([authorize, logger])
 
 app.get("/api/user", [authorize, logger], (req, res) => {
-  console.log(req.user);
-  res.send("user");
-});
+  console.log(req.user)
+  res.send("user")
+})
 ```
 
 ## POST method :-
@@ -993,16 +995,16 @@ app.get("/api/user", [authorize, logger], (req, res) => {
 In express.js :-
 
 ```js
-const express = require("express");
-const app = express();
-const { people } = require("./data.js");
+const express = require("express")
+const app = express()
+const { people } = require("./data.js")
 
 //* all static code
-app.use(express.static("./methods-public"));
+app.use(express.static("./methods-public"))
 
 app.listen(9000, () => {
-  console.log("Server is listening on port 9000....");
-});
+  console.log("Server is listening on port 9000....")
+})
 ```
 
 - In browser we see this :-
@@ -1042,8 +1044,8 @@ As our `method is "POST"` , so in express we write :-
 
 ```js
 app.post("/login", (req, res) => {
-  res.send("Posting");
-});
+  res.send("Posting")
+})
 ```
 
 - now we write `yusuf` in input and click the submit button . After clicking **submit** button , it took us in that _url_ ---> `http://localhost:9000/login` and browser show us **Posting** .
@@ -1060,13 +1062,13 @@ So in **app.post()** we can set that :-
 ```js
 app.post("/login", (req, res) => {
   // console.log(req.body); //# --> {name: "yusuf"}
-  const { name } = req.body;
+  const { name } = req.body
   if (name) {
-    res.status(200).send(`Welcome Mohammad ${name}`);
+    res.status(200).send(`Welcome Mohammad ${name}`)
   } else {
-    res.status(401).send("Confirm your name first");
+    res.status(401).send("Confirm your name first")
   }
-});
+})
 ```
 
 - using this code we show the name that is _typing_ **input** in our **browser**.
@@ -1121,33 +1123,33 @@ so ,
 
 ```html
 <script>
-  const result = document.querySelector(".result");
+  const result = document.querySelector(".result")
 
   //* this funcion fatching the people from server
   const fetchPeople = async () => {
     try {
-      const { data } = await axios.get("/api/people");
-      console.log(data); //* data = {success: true, data: Array(5)}
+      const { data } = await axios.get("/api/people")
+      console.log(data) //* data = {success: true, data: Array(5)}
 
       const people = data.data.map((person) => {
-        return `<h5>${person.name}</h5>`;
-      });
-      result.innerHTML = people.join("");
+        return `<h5>${person.name}</h5>`
+      })
+      result.innerHTML = people.join("")
     } catch (error) {
-      result.innerHTML = `<div class="alert alert-danger">Can't Fetch Data</div>`;
+      result.innerHTML = `<div class="alert alert-danger">Can't Fetch Data</div>`
     }
-  };
-  fetchPeople();
+  }
+  fetchPeople()
 </script>
 ```
 
 - here we fatch data from server `/api/people` , in app.js we already create this :-
 
 ```js
-const { people } = require("./data.js");
+const { people } = require("./data.js")
 app.get("/api/people", (req, res) => {
-  res.status(200).json({ success: true, data: people });
-});
+  res.status(200).json({ success: true, data: people })
+})
 ```
 
 - as we fetch data from `/api/people` this url so, `axios.get("/api/people")` and `app.get("/api/people", (req, res) => {})` gonna match with each other.
@@ -1161,24 +1163,24 @@ in javascript html :-
 ```html
 <script>
   //* submit form (click the button)
-  const btn = document.querySelector(".submit-btn");
-  const input = document.querySelector(".form-input");
-  const formAlert = document.querySelector(".form-alert");
+  const btn = document.querySelector(".submit-btn")
+  const input = document.querySelector(".form-input")
+  const formAlert = document.querySelector(".form-alert")
   btn.addEventListener("click", async (e) => {
-    e.preventDefault();
-    const nameValue = input.value;
+    e.preventDefault()
+    const nameValue = input.value
 
     try {
-      const { data } = await axios.post("/api/people", { name: nameValue });
-      const h5 = document.createElement("h5");
-      h5.textContent = data.person;
-      result.appendChild(h5);
+      const { data } = await axios.post("/api/people", { name: nameValue })
+      const h5 = document.createElement("h5")
+      h5.textContent = data.person
+      result.appendChild(h5)
     } catch (error) {
       // console.log(error.response)
-      formAlert.textContent = error.response.data.msg;
+      formAlert.textContent = error.response.data.msg
     }
-    input.value = "";
-  });
+    input.value = ""
+  })
 </script>
 ```
 
@@ -1186,14 +1188,14 @@ in javascript html :-
 
 ```js
 app.post("/api/people", (req, res) => {
-  const { name } = req.body;
+  const { name } = req.body
   if (!name) {
     return res
       .status(400)
-      .json({ success: false, msg: "please provide name value" });
+      .json({ success: false, msg: "please provide name value" })
   }
-  res.status(201).json({ success: true, person: name });
-});
+  res.status(201).json({ success: true, person: name })
+})
 ```
 
 **In browser _input_ we write --> `Forhad` , `Mazhar` and last we write nothing. just pass empty _input_ .**
