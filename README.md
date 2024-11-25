@@ -227,7 +227,7 @@ const app = express()
 **In a image**
 ![Alt](https://www.course-api.com/images/slides/slide-6.png)
 
-**Building a Server with Express and show it to browser :-**
+**Building a Server with Express and render it to browser :-**
 
 ```js
 const express = require("express")
@@ -238,8 +238,10 @@ app.get("/", (req, res) => res.send("Hello World!"))
 app.listen(9000, () => console.log("Example app listening on port 9000!"))
 ```
 
-- `app.get` that is the HTTP method, that all browser perform by default .
-- `get("path",callBack func);`
+- here basically **Hello World!** response send from server
+
+- `app.get` that is the HTTP method, using this method we get response from server .
+- `get("path",callBack func)`
 - inside callback function `(req,res) => res.send()`
 - inside **send()** method we easily pass a _string_ or _HTML_ .
 - same , If want to create a page **about** we just write
@@ -294,7 +296,7 @@ const server = http.createServer((req, res) => {
 server.listen(9000)
 ```
 
-**We can do this by using _Express_ :-**
+**We can do this by using _Express Js_ :-**
 
 ```js
 const express = require("express")
@@ -321,7 +323,7 @@ app.listen(9000, () => {
 app.listen(9000)
 ```
 
-- we dont need to create a server like **HTTP** module.
+- here using `"/"` , `/about` url we get the response from server
 
 - [**Express Project**](https://github.com/yusuf-shahin/Basics-of-express.js/tree/main/simple%20express-js%20project)
 
