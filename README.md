@@ -71,6 +71,9 @@ server.listen(9000, () => {
 
 - We pass two peremeter in _**http.createServer()**_ method **require** and **request**
 
+  - **response :** is send from **server** ==> **clint**
+  - **request :** is send from **clint** ==> **server**
+
 - listen(9000, () => comsole.log(message))
 
 ![Alt](https://www.course-api.com/images/slides/slide-5.png)
@@ -684,7 +687,9 @@ same we can set any `key=value` after `?` mark and get them by `req.query` prope
 
 ![Relative](./Image/pic-middleware.webp)
 
-- express middleware are function that execute during the request the server . Each middleware function has access to **request and reaponse** object . `request --> middleware func --> response`
+**What is middleware function?**
+
+- Express middleware is a function or programme that is gonig to run between the time that server **get()** the request and the time that server send the **request()** out to the clint.So ,each middleware function has access to **request and reaponse** object . `request --> middleware func --> response`
 
 **There are Three types of _middleware_ func :-**
 
@@ -734,7 +739,7 @@ app.listen(9000, () => {
 
 But the most common approach is pass the _middleware_ func inside **use()** method .
 
-** _app.use()_ method :-**
+#### **app.use() method :-**
 
 - in every time pass the middleware func in hard for us .
 - inside **app.use()** function we apply our _middleware_ func in our all route.
