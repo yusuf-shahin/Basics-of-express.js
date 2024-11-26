@@ -6,11 +6,13 @@
 
 - [ **JSON**](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#json)
 
-- [**Params**](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#params-in-url)
+- [**Route Params**](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#params-in-url)
 
   - [_params property_](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#params-property--)
 
   - [_query string params_](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#query-string-params--)
+
+- [**Middleware Function**](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#middleware-function)
 
 **Lets start our journey with Express Js**
 
@@ -479,7 +481,7 @@ app.get("/api/products/1", (req, res) => {
 - everythings is okk! but we dont set the specific _url_ in everytime.
 - here comes the concept of **params** in express.
 
-## Params in URL
+## Route Params in URL
 
 - parameters in Uniform Resource Locator
 
@@ -626,9 +628,9 @@ app.get("/api/products/:productID/reviews/:reviewID", (req, res) => {
 
 **Example:**
 
-- This is an illustration of a URL with query strings of a blog website that requests blogs on page number 3 and limits the response to only 3 objects. `https://helloworldblogs.com/search?page=2&limit=3`
+- This is an illustration of a URL with query strings of a blog website that requests blogs on page number 2 and limits the response to only 3 objects. `https://helloworldblogs.com/search?page=2&limit=3`
 
-- limit and Page, which have values of 3 and 2, respectively, are actual key-value pairs that make up the express query params. like that :-
+- limit and Page, which have values of 2 and 3, respectively, are actual key-value pairs that make up the express query params. like that :-
   ![Relative](./Image/query-string-params.jpeg)
 
 in _URL_ we pass `localhost:9000/api/v1/query?name=yusuf&id=7518`
@@ -651,7 +653,7 @@ app.listen(9000, () => {
 })
 ```
 
-- after `localhost:9000/api/v1/query` this paths everything is _query string_
+- after `localhost:9000/api/v1/query` this paths **after** this path we use `?` mark , then we get everything as _query string_ peremeter as `req.query`
 - in console we get `{name : "yusuf" , id : "7518"}`
 
 **Expline in Image**
@@ -674,7 +676,10 @@ same we can set any `key=value` after `?` mark and get them by `req.query` prope
 
 - `const {name} =  req.query ` --> we can get the _value_ of **name** _key_
 
-#### **_Middleware Function_**
+### **Middleware Function**
+
+- Basics of Express Middleware
+  [!Relative](./Image/middleware-basic.png)
 
 ![Relative](./Image/pic-middleware.webp)
 
