@@ -9,10 +9,10 @@
 **import express from _node-modules_**
 
 ```js
-const express = require("express");
-const app = express();
+const express = require("express")
+const app = express()
 
-app.listen(5000);
+app.listen(5000)
 ```
 
 - import path from _node-modules_ `const path = require("path");`
@@ -25,25 +25,32 @@ app.listen(5000);
 - [Express routing in details](https://expressjs.com/en/guide/routing.html)
 
 ```js
-const express = require("express");
-const path = require("path");
+const express = require("express")
+const path = require("path")
 
-const app = express();
+const app = express()
 
-app.get("/", (req, res) => {
-  //# __dirname --> (server-app.js)
-  res.sendFile(path.resolve(__dirname, "./index.html"));
-  //# path.resolve() method add all file from root .
-});
+app.get("/index", (req, res) => {
+  //@ here we basically send the file to create the root
+  res.sendFile(path.resolve(__dirname, "public", "./index.html"))
+  //#  show vanilla html code
+  //   res.sendFile(path.resolve(__dirname, "public", "./style.css"))
+  //#  just css code
+  //@  adding to static assets
+  //?  SSR
+})
 
 app.all("*", (req, res) => {
-  res.status(404).send("resource not found");
-});
+  res.status(404).send("resource not found")
+})
 
 app.listen(5000, () => {
-  console.log("server is listening on port 5000....");
-});
+  console.log("server is listening on port 5000....")
+})
 ```
+
+- **`path.resolve(__dirname, "public", "./index.html")`** in this code we create the path
+- send the response of file --> `index.html` from server .
 
 - `style.css` , `logo.svg` , `browser-app.js` we dont get them .
 
@@ -72,26 +79,26 @@ app.listen(5000, () => {
 ### The whole code is :-
 
 ```js
-const express = require("express");
-const path = require("path");
+const express = require("express")
+const path = require("path")
 
-const app = express();
+const app = express()
 
 // setup static and middleware
-app.use(express.static("./public"));
+app.use(express.static("./public"))
 
 app.get("/", (req, res) => {
   //# __dirname --> (server-app.js)
-  res.sendFile(path.resolve(__dirname, "./index.html"));
-});
+  res.sendFile(path.resolve(__dirname, "./index.html"))
+})
 
 app.all("*", (req, res) => {
-  res.status(404).send("resource not found");
-});
+  res.status(404).send("resource not found")
+})
 
 app.listen(5000, () => {
-  console.log("server is listening on port 5000....");
-});
+  console.log("server is listening on port 5000....")
+})
 ```
 
 **Another approach**
@@ -105,19 +112,19 @@ app.listen(5000, () => {
 **The new code is :-**
 
 ```js
-const express = require("express");
-const path = require("path");
+const express = require("express")
+const path = require("path")
 
-const app = express();
+const app = express()
 
 // setup static and middleware
-app.use(express.static("./public"));
+app.use(express.static("./public"))
 
 app.all("*", (req, res) => {
-  res.status(404).send("resource not found");
-});
+  res.status(404).send("resource not found")
+})
 
 app.listen(5000, () => {
-  console.log("server is listening on port 5000....");
-});
+  console.log("server is listening on port 5000....")
+})
 ```

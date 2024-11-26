@@ -1,0 +1,15 @@
+{
+  "name": "express-basics",
+  "version": "1.0.0",
+  "description": "- [**HTTP Method**](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#introduction-to-http--)",
+  "main": "concept of express.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.1"
+  }
+}

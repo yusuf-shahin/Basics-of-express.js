@@ -1,5 +1,19 @@
 # Basics of Express.js
 
+### Table of Content
+
+- [**HTTP Method**](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#introduction-to-http--)
+
+- [ **JSON**](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#json)
+
+- [**Params**](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#params-in-url)
+
+  - [_params property_](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#params-property--)
+
+  - [_query string params_](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#query-string-params--)
+
+**Lets start our journey with Express Js**
+
 - _Domain_ : **localhost:9000**
 
 #### [Skip the HTTP click here](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#expree-js)
@@ -484,10 +498,14 @@ using **params** in browser _url_ :-`localhost:9000/users/abcd`
 
 ```js
 app.get("/api/products/:id", (req, res) => {
+  console.log(req.params) //# --> { id : "abcd" }
+  // destructure the value of params
   const { id } = req.params
   console.log(id) //# --> "abcd"
 })
 ```
+
+- using request method we get **params** which is pass in _url_
 
 - in console we get `abcd`
 
