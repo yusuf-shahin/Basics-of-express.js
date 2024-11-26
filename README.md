@@ -679,7 +679,8 @@ same we can set any `key=value` after `?` mark and get them by `req.query` prope
 ### **Middleware Function**
 
 - Basics of Express Middleware
-  [!Relative](./Image/middleware-basic.png)
+
+![Relative](./Image/middleware-basic.png)
 
 ![Relative](./Image/pic-middleware.webp)
 
