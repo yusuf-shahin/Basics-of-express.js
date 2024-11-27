@@ -20,40 +20,6 @@
 
 #### [Skip the HTTP click here](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#expree-js)
 
-**Simple introduction of _HTTP module_ and _express js_ **
-
-```js
-//! ===============
-//? express js :
-//! ===============
-
-const express = require("express")
-const app = express()
-
-app.get("/", (req, res) => {
-  res.send("<h1>Hello world</h1>")
-})
-
-app.listen(9000, () => {
-  console.log("Example app listening on port 9000")
-})
-
-// ! ===============
-//? same thing using HTTP modules
-// ! ===============
-
-const http = require("http")
-
-const server = http.createServer((req, res) => {
-  res.write("<h1>hello people</h1>")
-  res.end()
-})
-
-server.listen(9000, () => {
-  console.log("Example app listening on port 9000")
-})
-```
-
 ### Introduction to HTTP :-
 
 ![Alt](https://www.course-api.com/images/slides/slide-4.png)
@@ -216,6 +182,40 @@ _**When browser do not find the url :-**_
 ![Relative](./Image/error-file.jfif)
 
 [**Simple HTTP module navbar project**](https://github.com/yusuf-shahin/Basics-of-node-js/tree/main/simple%20http%20modules%20project)
+
+#### **Simple introduction of _HTTP module_ and _express js_**
+
+```js
+//! ===============
+//? express js :
+//! ===============
+
+const express = require("express")
+const app = express()
+
+app.get("/", (req, res) => {
+  res.send("<h1>Hello world</h1>")
+})
+
+app.listen(9000, () => {
+  console.log("Example app listening on port 9000")
+})
+
+// ! ===============
+//? same thing using HTTP modules
+// ! ===============
+
+const http = require("http")
+
+const server = http.createServer((req, res) => {
+  res.write("<h1>hello people</h1>")
+  res.end()
+})
+
+server.listen(9000, () => {
+  console.log("Example app listening on port 9000")
+})
+```
 
 ## Expree JS
 
@@ -679,7 +679,7 @@ same we can set any `key=value` after `?` mark and get them by `req.query` prope
 
 - `const {name} =  req.query ` --> we can get the _value_ of **name** _key_
 
-### **Middleware Function**
+## **Middleware Function**
 
 - Basics of Express Middleware
 
@@ -739,7 +739,7 @@ app.listen(9000, () => {
 
 But the most common approach is pass the _middleware_ func inside **use()** method .
 
-#### **app.use() method :-**
+### **app.use() method :-**
 
 - in every time pass the middleware func in hard for us .
 - inside **app.use()** function we apply our _middleware_ func in our all route.
@@ -748,8 +748,7 @@ But the most common approach is pass the _middleware_ func inside **use()** meth
 const express = require("express")
 const app = express()
 
-//  req ==> middleware ==> res
-
+//  create a logger function
 const logger = (req, res, next) => {
   const method = req.method
   const url = req.url
@@ -785,13 +784,15 @@ in browser _url_ we write `localhost:9000/` , `localhost:9000/about` , `localhos
 **in console** we see that :-
 ![Relative](./Image/middleware.jpeg)
 
-We also pass the _path_ in **use()** method, like :-
+We also set the _url path_ inside **use()** method, as a condition like this :-
 
-- `app.use("/api", logger);`
+- `app.use("/api/", logger)`
 
-- _middleware_ **logger** func will work after path `/api/` .
+- _middleware_ **logger** func will work after `/api/` path .
 
-- the code after path `/api/` pass in our use method :-
+- before execute the logger function , in _url_ `/api/` will check .
+
+- in _url_ `/api/` path is exist then **logger** function will execute .
 
 ```js
 const express = require("express")
@@ -831,16 +832,18 @@ app.listen(9000, () => {
 })
 ```
 
+-
+
 - in _url_ we write `localhost:9000/` , `localhost:9000/about` , `localhost:9000/aboutId` , `localhost:9000/api/image` , `localhost:9000/api/products/1` ,`localhost:9000/api/product` , `localhost:9000/api/image` , `localhost:9000/api/image`
 
-**in console** we see that :-
+**in console** we see that **( avoid the first 8 thing )** :-
 ![Relative](./Image/middleware-api.jpeg)
 
 - in _url_ `localhost:9000/api` after that path our _middleware_ function is work .
 
 - [**learn more...**](https://expressjs.com/en/4x/api.html#app.use)
 
-**_Multiple Middleware function_ :-**
+#### **Multiple Middleware function :-**
 
 - using array inside **use()** method, we can set multiple middleware func
 
@@ -896,7 +899,7 @@ This is authorize func...
 This is logger func...
 ```
 
-**_complecated example_ :-**
+#### **complicated example :-**
 
 - in browser _url_ we pass `http://localhost:9000/about/?user=yusuf`
 - **code**
@@ -993,7 +996,7 @@ app.get("/api/user", [authorize, logger], (req, res) => {
 
 - do a mini project with post method .
 
-#### Methods - POST (Form Example)
+### Methods - POST (Form Example)
 
 - send the HTTP request from _HTML_
 
