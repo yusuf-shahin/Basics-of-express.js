@@ -14,6 +14,8 @@
 
 - [**Middleware Function**](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#middleware-function)
 
+- [**Post Method**](https://github.com/bedimcode/portfolio-responsive-complete.git)
+
 **Lets start our journey with Express Js**
 
 - _Domain_ : **localhost:9000**
@@ -996,7 +998,7 @@ app.get("/api/user", [authorize, logger], (req, res) => {
 
 - do a mini project with post method .
 
-### Methods - POST (Form Example)
+### POST method (Form Example)
 
 - send the HTTP request from _HTML_
 
@@ -1026,12 +1028,14 @@ app.get("/api/user", [authorize, logger], (req, res) => {
 </body>
 ```
 
-In express.js :-
+- in **form** here we set the _url_ **action** `action="/login"`
+- set the **method** **POST** in `method="POST"`
+
+**In express.js :-**
 
 ```js
 const express = require("express")
 const app = express()
-const { people } = require("./data.js")
 
 //* all static code
 app.use(express.static("./methods-public"))
@@ -1041,7 +1045,9 @@ app.listen(9000, () => {
 })
 ```
 
-- In browser we see this :-
+- we pass our static code by `app.use(express.static("./methods-public"))`
+
+**In browser we see this :-**
 
 ![Relative](./Image/app-form.jpeg)
 
@@ -1060,13 +1066,15 @@ app.listen(9000, () => {
 
 - In **HTML** _form_-tag `action is "/login"` and `method is "POST"`, so in `/login` url or we are submiting the form . Inside the form, we have input and a submit button.
 
-- If we type `yusuf` in input and click the submit button . the url is `http://localhost:9000/login` and we see the browser :-
+- If we type `yusuf` in `input` and click the submit button . the url is `http://localhost:9000/login` and we see the browser :-
 
 ![relative](./Image/from-browser.jpeg)
 
 - If we inspect our **network** , we find that `Request Method is POST`
 
 ![Relative](./Image/from-browser-network.jpeg)
+
+- `http://localhost:9000/login` this is a **POST** _HTTP_ method .
 
 - In we click the **plyload** beside the **server** form-data :- `name: yusuf`
 
@@ -1078,11 +1086,14 @@ As our `method is "POST"` , so in express we write :-
 
 ```js
 app.post("/login", (req, res) => {
-  res.send("Posting")
+  res.send("<h1>Posting</h1>")
 })
 ```
 
 - now we write `yusuf` in input and click the submit button . After clicking **submit** button , it took us in that _url_ ---> `http://localhost:9000/login` and browser show us **Posting** .
+
+**http://localhost:9000/login**
+![Relative](./Image/WhatsApp%20Image%202024-11-28%20at%201.56.45%20PM.jpeg)
 
 - inside `app.post()` method , if we write `console.log(req.body);` in console we get `undefine` . For that reason in middleware we pass `app.use(express.urlencoded({ extended: false }))` .
 
