@@ -1064,25 +1064,29 @@ app.listen(9000, () => {
 </form>
 ```
 
-- In **HTML** _form_-tag `action is "/login"` and `method is "POST"`, so in `/login` url or we are submiting the form . Inside the form, we have input and a submit button.
+- In **HTML** _form_-tag **action** is `"/login"` and `method is "POST"`
 
-- If we type `yusuf` in `input` and click the submit button . the url is `http://localhost:9000/login` and we see the browser :-
+- If we type `yusuf` in `input` and click the **submit** button . the url is `http://localhost:9000/login` and we see the browser :-
+
+- Basically action `action="/login"` set us the next urk path
+
+**//localhost:9000/login**
 
 ![relative](./Image/from-browser.jpeg)
 
-- If we inspect our **network** , we find that `Request Method is POST`
+- If we inspect our **network** , we find that **Request** Method is **POST**.
 
 ![Relative](./Image/from-browser-network.jpeg)
 
-- `http://localhost:9000/login` this is a **POST** _HTTP_ method .
+- So , `http://localhost:9000/login` this is a **POST** _HTTP_ method .
 
-- In we click the **plyload** beside the **server** form-data :- `name: yusuf`
+- If we click the **plyload** beside the **server** form-data :- `name: yusuf`
 
 ![Relative](./Image/network-reqBody.jpeg)
 
 - In **HTML** in _form_-tag we provide a `name="name"` , here **name** is the _key_ and **yusuf** is the _value_ . We can set any _key-name_ instead of **name** . Suppose , in **HTML** form , if write `name="testing"` in form-data we get `testing: yusuf` .
 
-As our `method is "POST"` , so in express we write :-
+We can send ant response in "POST" method , so in express we write :-
 
 ```js
 app.post("/login", (req, res) => {
@@ -1092,10 +1096,11 @@ app.post("/login", (req, res) => {
 
 - now we write `yusuf` in input and click the submit button . After clicking **submit** button , it took us in that _url_ ---> `http://localhost:9000/login` and browser show us **Posting** .
 
-**http://localhost:9000/login**
+**localhost:9000/login**
 ![Relative](./Image/WhatsApp%20Image%202024-11-28%20at%201.56.45%20PM.jpeg)
 
-- inside `app.post()` method , if we write `console.log(req.body);` in console we get `undefine` . For that reason in middleware we pass `app.use(express.urlencoded({ extended: false }))` .
+- inside `app.post()` method , if we write `console.log(req.body);` in console we get `undefine` .
+  **For that reason in middleware we pass `app.use(express.urlencoded({ extended: false }))` . Like that :-**
 
 ![Relative](./Image/post-code.jpeg)
 
@@ -1148,11 +1153,11 @@ in **./methods-public** folder ---> **javascript.html** file
 </main>
 ```
 
-- In that case we dont have the `action=""` and `method=""` in the **HTML** _form_-tag but in _input_ we have `name` attribute.
+- In that case we dont have the `action=""` and `method=""` in the _HTML_ **form**-tag but in **input** we have `name` attribute.
 
-**Using front-end** we fatch people from server .
+- **Using front-end** we fatch people from server .
 
-CDN link of AXIOS Library in _HTML_ ...
+CDN link of AXIOS Library in **HTML** ...
 
 ```js
 <script
@@ -1162,7 +1167,7 @@ CDN link of AXIOS Library in _HTML_ ...
 ></script>
 ```
 
-- In _HTML_ `<div class="result"></div>` we want to show the data .
+- In **HTML** `<div class="result"></div>` we want to show the data .
 
 so ,
 
@@ -1179,6 +1184,7 @@ so ,
       const people = data.data.map((person) => {
         return `<h5>${person.name}</h5>`
       })
+      // people = ['john', 'peter', 'susan' , 'enna' , 'emma'];
       result.innerHTML = people.join("")
     } catch (error) {
       result.innerHTML = `<div class="alert alert-danger">Can't Fetch Data</div>`
@@ -1190,12 +1196,18 @@ so ,
 
 - here we fatch data from server `/api/people` , in app.js we already create this :-
 
+**localhost:9000/api/people**
 ```js
 const { people } = require("./data.js")
+
+//! GET Request
 app.get("/api/people", (req, res) => {
   res.status(200).json({ success: true, data: people })
 })
 ```
+- we can see the data `localhost:9000/api/people` as JSON formet .
+
+![Rrlative](./Image/WhatsApp%20Image%202024-11-28%20at%208.52.26%20PM.jpeg)
 
 - as we fetch data from `/api/people` this url so, `axios.get("/api/people")` and `app.get("/api/people", (req, res) => {})` gonna match with each other.
 - we just show the data, but we dont show nothing dynamically.

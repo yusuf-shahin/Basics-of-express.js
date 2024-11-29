@@ -51,10 +51,8 @@
       //* this funcion fatching the people from server
       const fetchPeople = async () => {
         try {
-          //# fetch data from '/api/people' which is create in app.js . so make sure this api gonna mathch
-          //# in app.js --> app.get('/api/people', (req,res) => {
-          // res.status(200).json({ success: true, data: people })
-          // })
+          //@ fetch data from '/api/people' which is create in app.js . so make sure this api gonna mathch
+          //@ here we render the data :
           const { data } = await axios.get("/api/people")
           console.log(data) //* data = {success: true, data: Array(5)}
 
@@ -69,6 +67,7 @@
       fetchPeople()
 
       //* submit form (click the button)
+      //! Post request
       const btn = document.querySelector(".submit-btn")
       const input = document.querySelector(".form-input")
       const formAlert = document.querySelector(".form-alert")
