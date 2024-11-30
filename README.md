@@ -235,13 +235,13 @@ const app = express()
 
 **in _app_ , we have a obj with banch of useful method**
 
-- [app.get](https://www.geeksforgeeks.org/express-js-http-methods/#get-method)
-- [app.post](https://www.geeksforgeeks.org/express-js-http-methods/#post-method)
-- [app.put](https://www.geeksforgeeks.org/express-js-http-methods/#put-method)
-- [app.delete](https://www.geeksforgeeks.org/express-js-http-methods/#delete-method)
-- app.all ()
-- app.use
-- app.listen
+- [**app.get**](https://www.geeksforgeeks.org/express-js-http-methods/#get-method)
+- [**app.post**](https://www.geeksforgeeks.org/express-js-http-methods/#post-method)
+- [**app.put**](https://www.geeksforgeeks.org/express-js-http-methods/#put-method)
+- [**app.delete**](https://www.geeksforgeeks.org/express-js-http-methods/#delete-method)
+- **app.all** (The app. all() function is used to route all types of HTTP requests. Like if we have POST, GET, PUT, DELETE, etc,)
+- **app.use** ( Passing the middleware in every method )
+- **app.listen** ( pass the code , and render everything in server. `localhost:9000` )
 
 - [**Learn more to click this article**](https://www.freecodecamp.org/news/http-request-methods-explained/)
 
@@ -996,6 +996,9 @@ app.get("/api/user", [authorize, logger], (req, res) => {
 
 ## POST method :-
 
+- [From Example](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#post-method-form-example)
+- [Javascript Example](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#methods---post-javascript-example)
+
 - do a mini project with post method .
 
 ### POST method (Form Example)
@@ -1124,7 +1127,15 @@ app.post("/login", (req, res) => {
 - using this code we show the name that is _typing_ **input** in our **browser**.
 - in we inspect and **network** --> **headers** --> **request headers** --> **content-type: application/x-www-form-urlencoded** because in middleware we pass `app.use(express.urlencoded({ extended: false }));`
 
-#### Methods - POST (javascript Example)
+### POST method (javascript Example)
+
+- Post the value to server using AXIOS
+  - `await axios.post("/api/people", { name: nameValue })` (javascripthtml)
+- In server we get that name as value of person
+  - `res.status(201).json({ success: true, person: name })`
+- Then we distructer it , and render it of browser.
+
+- **Server dose not render the post request, we only see this in our networ tab**
 
 In this case, it's gonna be done strictly using JavaScript and we'll use JavaScript to send our HTTP requests.
 
@@ -1197,6 +1208,7 @@ so ,
 - here we fatch data from server `/api/people` , in app.js we already create this :-
 
 **localhost:9000/api/people**
+
 ```js
 const { people } = require("./data.js")
 
@@ -1205,12 +1217,13 @@ app.get("/api/people", (req, res) => {
   res.status(200).json({ success: true, data: people })
 })
 ```
-- we can see the data `localhost:9000/api/people` as JSON formet .
+
+**we can see the data `localhost:9000/api/people` as JSON formet .**
 
 ![Rrlative](./Image/WhatsApp%20Image%202024-11-28%20at%208.52.26%20PM.jpeg)
 
 - as we fetch data from `/api/people` this url so, `axios.get("/api/people")` and `app.get("/api/people", (req, res) => {})` gonna match with each other.
-- we just show the data, but we dont show nothing dynamically.
+- as axios get the data from server .
 
 **Write any thing in _input_ and show it to the to In _HTML_ `<div class="result"></div>` .**
 
@@ -1226,6 +1239,7 @@ in javascript html :-
   btn.addEventListener("click", async (e) => {
     e.preventDefault()
     const nameValue = input.value
+    //@ this nameValue derectly send to the server and render then we render in our browser .
 
     try {
       const { data } = await axios.post("/api/people", { name: nameValue })
@@ -1241,6 +1255,8 @@ in javascript html :-
 </script>
 ```
 
+- when we click the button , we send a **Post** request in server
+
 **In app.js**
 
 ```js
@@ -1255,8 +1271,64 @@ app.post("/api/people", (req, res) => {
 })
 ```
 
+- we see that **Post** request details in our network tab
+
 **In browser _input_ we write --> `Forhad` , `Mazhar` and last we write nothing. just pass empty _input_ .**
 
 ![Relative](./Image/kocotopo.jpeg)
 
 - in **network** first two time we get `people` and our status code is `201` and last time we get aslo `people` but our status code is `400` .
+
+### Postman .
+
+- What is postman ?
+- Want to know about that ? [Click here...](https://www.postman.com/product/what-is-postman/)
+
+### PUT method :-
+
+```js
+app.put("/api/people/:id", (req, res) => {
+  //@ this is basically update our data
+  const { id } = req.params
+  const { name } = req.body
+  const person = people.find((person) => person.id === Number(id))
+
+  if (!person) {
+    return res
+      .status(400)
+      .json({ success: false, msg: `no person with id ${id}` })
+  }
+
+  const newPeople = people.map((person) => {
+    if (person.id === Number(id)) {
+      person.name = name
+    }
+    return person
+  })
+  return res.status(200).json({ success: true, data: newPeople })
+})
+```
+
+### DELETE method :-
+
+- Put and Delet method are same . But here we dont need anything from body.
+
+```js
+app.delete("/api/people/:id", (req, res) => {
+  const { id } = req.params
+  const person = people.find((person) => person.id === Number(id))
+  if (!person) {
+    return res
+      .status(404)
+      .json({ success: false, msg: `no person with id ${req.params.id}` })
+  }
+  const newPeople = people.filter(
+    (person) => person.id !== Number(req.params.id)
+  )
+  return res.status(200).json({ success: true, data: newPeople })
+})
+```
+
+- **app.put** and **app.delete** both path are the same, since the method is different these are different requests. That is crucial.
+
+## Router in Express :-

@@ -48,7 +48,7 @@
     <script>
       const result = document.querySelector(".result")
 
-      //* this funcion fatching the people from server
+      //* this funcion fatching the people from server and render it in h5 tag
       const fetchPeople = async () => {
         try {
           //@ fetch data from '/api/people' which is create in app.js . so make sure this api gonna mathch
@@ -74,7 +74,7 @@
       btn.addEventListener("click", async (e) => {
         e.preventDefault()
         const nameValue = input.value
-
+        //@ this nameValue derectly send to the server and render then we render in our browser .
         try {
           const { data } = await axios.post("/api/people", { name: nameValue })
           const h5 = document.createElement("h5")
