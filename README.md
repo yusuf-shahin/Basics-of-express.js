@@ -1284,13 +1284,14 @@ app.post("/api/people", (req, res) => {
 - What is postman ?
 - Want to know about that ? [Click here...](https://www.postman.com/product/what-is-postman/)
 
-### PUT method :-
+## PUT method :-
 
 ```js
 app.put("/api/people/:id", (req, res) => {
   //@ this is basically update our data
   const { id } = req.params
   const { name } = req.body
+  // in postman , body --> raw --> json
   const person = people.find((person) => person.id === Number(id))
 
   if (!person) {
@@ -1309,14 +1310,117 @@ app.put("/api/people/:id", (req, res) => {
 })
 ```
 
-### DELETE method :-
+**In Postman**
+[!Relative](./Image/WhatsApp%20Image%202024-12-01%20at%2010.36.18%20AM.jpeg)
 
-- Put and Delet method are same . But here we dont need anything from body.
+- `localhost:9000/api/people/2` using this _url_ we send **Put** request
+  - notice our `req.params.id` is **2**
+- In body we write `{ "name": "yusuf" }` in json format .
+- In body our `id : 2` is update .
+
+## DELETE method :-
+
+- Put and Delet method are same . But here as we delete . So we dont need any informaton from body.
 
 ```js
 app.delete("/api/people/:id", (req, res) => {
   const { id } = req.params
   const person = people.find((person) => person.id === Number(id))
+  if (!person) {
+    return res
+      .status(404)
+      .json({ success: false, msg: `no person with id ${id}` })
+  }
+  const newPeople = people.filter((person) => person.id !== Number(id))
+  return res.status(200).json({ success: true, data: newPeople })
+})
+```
+
+- **app.put** and **app.delete** both path are the same, since the method is different these are different requests. That is crucial.
+
+### Image Model View Controller (MVC) :-
+
+[!Relative](./Image/MVC.png)
+
+## Router in Express :-
+
+- First Create a **router** folder
+  - Create two file in that repo :-
+  - **auth.js** , **people.js**
+
+**people.js** file (code is below)
+
+- where we use that `/api/people/` router cut all things from app.js
+- past it on **people.js**
+- convert all app (like `app.get` , `app.post`) to router (like `router.get`, `router.post`)
+- export that `module.exports = router`
+
+```js
+const express = require("express")
+const router = express.Router()
+
+//* import people
+const { people } = require("../data")
+
+//! GET Request
+router.get("/api/people", (req, res) => {
+  res.status(200).json({ success: true, data: people })
+})
+
+//! Post Request
+//* click submit button (javascript form)
+app.post("/api/people", (req, res) => {
+  const { name } = req.body
+  if (!name) {
+    return res
+      .status(400)
+      .json({ success: false, msg: "please provide some value in it" })
+  }
+  res.status(201).json({ person: name })
+})
+
+//! another Post request :
+router.post("/api/people/postman", (req, res) => {
+  const { name } = req.body
+  if (!name) {
+    return res
+      .status(400)
+      .json({ success: false, msg: "please provide some value in it" })
+  }
+
+  //@ here people is come from data.js
+  res.status(201).json({ data: [...people, name] })
+})
+
+//@ here previous code, app.get() and app.post() both of that url are same but method are different
+//? app.get() --> I'm reading data from API people.
+//? app.post() --> I'm actually trying to add data.
+
+//! Put request
+router.put("/api/people/:id", (req, res) => {
+  //@ this is basically update our data
+  const { id } = req.params
+  const { name } = req.body
+  const person = people.find((person) => person.id === Number(id))
+
+  if (!person) {
+    return res
+      .status(400)
+      .json({ success: false, msg: `no person with id ${id}` })
+  }
+
+  const newPeople = people.map((person) => {
+    if (person.id === Number(id)) {
+      person.name = name
+    }
+    return person
+  })
+  res.status(200).json({ success: true, data: newPeople })
+})
+
+//! Delete
+router.delete("/api/people/:id", (req, res) => {
+  const person = people.find((person) => person.id === Number(req.params.id))
   if (!person) {
     return res
       .status(404)
@@ -1327,8 +1431,129 @@ app.delete("/api/people/:id", (req, res) => {
   )
   return res.status(200).json({ success: true, data: newPeople })
 })
+
+module.exports = router
 ```
 
-- **app.put** and **app.delete** both path are the same, since the method is different these are different requests. That is crucial.
+**Import this file to app.js and pass that in middleware by _use()_ method**
 
-## Router in Express :-
+```js
+const routePeople = require("./routes/people.js")
+//* pass route in middleware
+app.use("/api/people", routePeople)
+```
+
+- here we set the route inside our middleware `/api/people` , so we do not need the use the route to **people.js** file .
+
+**remove all `/api/people` route from people.js**
+
+```js
+const express = require("express")
+const router = express.Router()
+
+//* import people
+const { people } = require("../data")
+
+//! GET Request
+router.get("/", (req, res) => {
+  res.status(200).json({ success: true, data: people })
+})
+
+//! Post Request
+//* click submit button (javascript form)
+router.post("/", (req, res) => {
+  const { name } = req.body
+  if (!name) {
+    return res
+      .status(400)
+      .json({ success: false, msg: "please provide some value in it" })
+  }
+  res.status(201).json({ person: name })
+})
+
+//! another Post request :
+router.post("/postman", (req, res) => {
+  const { name } = req.body
+  if (!name) {
+    return res
+      .status(400)
+      .json({ success: false, msg: "please provide some value in it" })
+  }
+
+  //@ here people is come from data.js
+  res.status(201).json({ data: [...people, name] })
+})
+
+//@ here previous code, app.get() and app.post() both of that url are same but method are different
+//? app.get() --> I'm reading data from API people.
+//? app.post() --> I'm actually trying to add data.
+
+//! Put request
+router.put("/:id", (req, res) => {
+  //@ this is basically update our data
+  const { id } = req.params
+  const { name } = req.body
+  const person = people.find((person) => person.id === Number(id))
+
+  if (!person) {
+    return res
+      .status(400)
+      .json({ success: false, msg: `no person with id ${id}` })
+  }
+
+  const newPeople = people.map((person) => {
+    if (person.id === Number(id)) {
+      person.name = name
+    }
+    return person
+  })
+  res.status(200).json({ success: true, data: newPeople })
+})
+
+//! Delete
+router.delete("/:id", (req, res) => {
+  const person = people.find((person) => person.id === Number(req.params.id))
+  if (!person) {
+    return res
+      .status(404)
+      .json({ success: false, msg: `no person with id ${req.params.id}` })
+  }
+  const newPeople = people.filter(
+    (person) => person.id !== Number(req.params.id)
+  )
+  return res.status(200).json({ success: true, data: newPeople })
+})
+
+module.exports = router
+```
+
+**auth.js** file (code is below)
+
+- where we use that `/login` router cut all things from **app.js**
+- past it on **auth.js**
+- export that `module.exports = router`
+
+```js
+const express = require("express")
+const router = express.Router()
+
+router.post("/", (req, res) => {
+  // console.log(req.body); //# --> {name: "yusuf"}
+  // @ here name will set which write in input...
+  const { name } = req.body
+  if (name) {
+    res.status(200).send(`Welcome Mohammad ${name}`)
+  } else {
+    res.status(401).send("Confirm your name first")
+  }
+  // res.send("<h1>Posting</h1>")
+})
+
+module.exports = router
+```
+
+**app.js**
+
+```js
+app.use("/login", routeAuth)
+```
