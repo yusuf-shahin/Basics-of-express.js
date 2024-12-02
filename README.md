@@ -24,6 +24,8 @@
 
 - [**Route in Express**](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#router-in-express--)
 
+- [**Controller**]()
+
 **Lets start our journey with Express Js**
 
 - _Domain_ : **localhost:9000**
@@ -753,7 +755,11 @@ But the most common approach is pass the _middleware_ func inside **use()** meth
 
 - inside **app.use()** function we apply our _middleware_ func in our all route.
 - we pass two thing as parameter of **use** method.
-  - 1. **url** 2. **middleware** function
+  - 1. **routing url** 2. **middleware** function
+  - `app.use("/api/", logger)`
+  - in that case we do not need **next()** in **logger** function
+
+**middleware function without routing url**
 
 ```js
 const express = require("express")
@@ -1355,7 +1361,8 @@ app.delete("/api/people/:id", (req, res) => {
 
 - First Create a **router** folder
   - Create two file in that repo :-
-  - **auth.js** , **people.js**
+  - [**people.js**](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#peoplejs-file-code-is-below)
+  - [**auth.js** ](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#authjs-file-code-is-below)
 
 ### **people.js** file (code is below)
 
@@ -1565,4 +1572,173 @@ module.exports = router
 
 ```js
 app.use("/login", routeAuth)
+```
+
+### The whole code of app.js
+
+```js
+const express = require("express")
+const app = express()
+
+// first import ==> pass all static file using middle ware ==>
+
+//! express router
+const routePeople = require("./routes/people.js")
+const routeAuth = require("./routes/auth.js")
+
+//_ regular form
+
+//* all static code
+app.use(express.static("./methods-public"))
+
+//* parse from data
+app.use(express.urlencoded({ extended: false }))
+//@ It is related to auth.js
+
+//_ Route in Express
+
+//* perse json
+app.use(express.json())
+//@ it is related to people.js ==> router.post
+
+//* pass fixte route in middleware function
+app.use("/api/people", routePeople)
+app.use("/login", routeAuth)
+
+app.listen(9000, () => {
+  console.log("Server is listening on port 9000....")
+})
+```
+
+## Controller (clean code)
+
+- main purpose to create a **controller** to keep **route** file much cleaner .
+
+Create a seperate name **controller** , then create a file **peopleSetup.js**
+
+- set the all function to **peopleSetup.js** and export this as object :
+
+```js
+const { people } = require("../data")
+
+const getPeople = (req, res) => {
+  res.status(200).json({ success: true, data: people })
+}
+
+const createPeople = (req, res) => {
+  const { name } = req.body
+  if (!name) {
+    return res
+      .status(400)
+      .json({ success: false, msg: "please provide some value in it" })
+  }
+  res.status(201).json({ person: name })
+}
+
+const createPeoplePostman = (req, res) => {
+  const { name } = req.body
+  if (!name) {
+    return res
+      .status(400)
+      .json({ success: false, msg: "please provide some value in it" })
+  }
+
+  //@ here people is come from data.js
+  res.status(201).json({ data: [...people, name] })
+}
+
+const updatePeople = (req, res) => {
+  //@ this is basically update our data
+  const { id } = req.params
+  const { name } = req.body
+  const person = people.find((person) => person.id === Number(id))
+
+  if (!person) {
+    return res
+      .status(400)
+      .json({ success: false, msg: `no person with id ${id}` })
+  }
+
+  const newPeople = people.map((person) => {
+    if (person.id === Number(id)) {
+      person.name = name
+    }
+    return person
+  })
+  res.status(200).json({ success: true, data: newPeople })
+}
+
+const deletePeople = (req, res) => {
+  const person = people.find((person) => person.id === Number(req.params.id))
+  if (!person) {
+    return res
+      .status(404)
+      .json({ success: false, msg: `no person with id ${req.params.id}` })
+  }
+  const newPeople = people.filter(
+    (person) => person.id !== Number(req.params.id)
+  )
+  return res.status(200).json({ success: true, data: newPeople })
+}
+
+module.exports = {
+  getPeople,
+  createPeople,
+  createPeoplePostman,
+  updatePeople,
+  deletePeople,
+}
+```
+
+**app.js**
+
+```js
+const express = require("express")
+const router = express.Router()
+//@ in route basically we store our all request
+
+//* import people
+const { people } = require("../data")
+const {
+  getPeople,
+  updatePeople,
+  createPeople,
+  createPeoplePostman,
+  deletePeople,
+} = require("../controller/peopleSetup")
+
+//! all request
+router.get("/", getPeople)
+router.post("/", createPeople)
+router.post("/postman", createPeoplePostman)t
+router.put("/:id", updatePeople)
+router.delete("/:id", deletePeople)
+
+module.exports = router
+```
+
+### Route optimization in **app.js**
+
+**Same thing in that way**
+
+```js
+const express = require("express")
+const router = express.Router()
+//@ in route basically we store our all request
+
+//* import people
+const { people } = require("../data")
+const {
+  getPeople,
+  updatePeople,
+  createPeople,
+  createPeoplePostman,
+  deletePeople,
+} = require("../controller/peopleSetup")
+
+router.route("/").get(getPeople).post(createPeople)
+router.route("/postman").post(createPeoplePostman)
+router.route("/:id").put(updatePeople).delete(deletePeople)
+
+module.exports = router
 ```

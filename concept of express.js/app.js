@@ -13,13 +13,14 @@ const routeAuth = require("./routes/auth.js")
 app.use(express.static("./methods-public"))
 
 //* parse from data
-// app.use(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: false }))
 //@ It is related to auth.js
 
 //_ Route in Express
 
 //* perse json
 app.use(express.json())
+//@ it is related to people.js ==> router.post
 
 //* pass fixte route in middleware function
 app.use("/api/people", routePeople)
