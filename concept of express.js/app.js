@@ -1,8 +1,7 @@
 const express = require("express")
 const app = express()
 
-//! data
-const { people } = require("./data.js")
+// first import ==> pass all static file using middle ware ==>
 
 //! express router
 const routePeople = require("./routes/people.js")
@@ -14,7 +13,8 @@ const routeAuth = require("./routes/auth.js")
 app.use(express.static("./methods-public"))
 
 //* parse from data
-app.use(express.urlencoded({ extended: false }))
+// app.use(express.urlencoded({ extended: false }))
+//@ It is related to auth.js
 
 //_ Route in Express
 

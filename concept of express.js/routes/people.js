@@ -1,5 +1,6 @@
 const express = require("express")
 const router = express.Router()
+//@ in route basically we store our all request
 
 //* import people
 const { people } = require("../data")
@@ -61,7 +62,7 @@ router.put("/:id", (req, res) => {
 })
 
 //! Delete
-router.delete("{/:id", (req, res) => {
+router.delete("/:id", (req, res) => {
   const person = people.find((person) => person.id === Number(req.params.id))
   if (!person) {
     return res

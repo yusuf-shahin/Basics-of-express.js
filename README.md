@@ -16,6 +16,14 @@
 
 - [**Post Method**](https://github.com/bedimcode/portfolio-responsive-complete.git)
 
+- [**Postman**](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#postman-)
+
+- [**Put Method**](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#put-method--)
+
+- [**Delete Method**](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#postman-)
+
+- [**Route in Express**](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#router-in-express--)
+
 **Lets start our journey with Express Js**
 
 - _Domain_ : **localhost:9000**
@@ -240,7 +248,7 @@ const app = express()
 - [**app.put**](https://www.geeksforgeeks.org/express-js-http-methods/#put-method)
 - [**app.delete**](https://www.geeksforgeeks.org/express-js-http-methods/#delete-method)
 - **app.all** (The app. all() function is used to route all types of HTTP requests. Like if we have POST, GET, PUT, DELETE, etc,)
-- **app.use** ( Passing the middleware in every method )
+- [**app.use**](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#appuse-method--) ( Passing the middleware in every method )
 - **app.listen** ( pass the code , and render everything in server. `localhost:9000` )
 
 - [**Learn more to click this article**](https://www.freecodecamp.org/news/http-request-methods-explained/)
@@ -743,8 +751,9 @@ But the most common approach is pass the _middleware_ func inside **use()** meth
 
 ### **app.use() method :-**
 
-- in every time pass the middleware func in hard for us .
 - inside **app.use()** function we apply our _middleware_ func in our all route.
+- we pass two thing as parameter of **use** method.
+  - 1. **url** 2. **middleware** function
 
 ```js
 const express = require("express")
@@ -1340,7 +1349,7 @@ app.delete("/api/people/:id", (req, res) => {
 
 ### Image Model View Controller (MVC) :-
 
-[!Relative](./Image/MVC.png)
+![Relative](./Image/MVC.png)
 
 ## Router in Express :-
 
@@ -1348,7 +1357,7 @@ app.delete("/api/people/:id", (req, res) => {
   - Create two file in that repo :-
   - **auth.js** , **people.js**
 
-**people.js** file (code is below)
+### **people.js** file (code is below)
 
 - where we use that `/api/people/` router cut all things from app.js
 - past it on **people.js**
@@ -1527,7 +1536,7 @@ router.delete("/:id", (req, res) => {
 module.exports = router
 ```
 
-**auth.js** file (code is below)
+### **auth.js** file (code is below)
 
 - where we use that `/login` router cut all things from **app.js**
 - past it on **auth.js**
