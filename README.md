@@ -26,6 +26,8 @@
 
 - [**Controller**](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#controller-clean-code)
 
+- [**Main Thing of Express**](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#Main-Thing-of-Express)
+
 **Lets start our journey with Express Js**
 
 - _Domain_ : **localhost:9000**
@@ -1746,3 +1748,11 @@ router.route("/:id").put(updatePeople).delete(deletePeople)
 
 module.exports = router
 ```
+
+## Main Thing of Express
+
+- We keep our all module and set that in [**app.js**](https://github.com/yusuf-shahin/Basics-of-express.js/blob/main/concept%20of%20express.js/app.js) using middleware.
+
+- We set our all route in [**people.js**](https://github.com/yusuf-shahin/Basics-of-express.js/blob/main/concept%20of%20express.js/routes/people.js) and [**auth.js**](https://github.com/yusuf-shahin/Basics-of-express.js/blob/main/concept%20of%20express.js/routes/auth.js)
+
+- We keep our all function in controller [**peopleSet.js**](https://github.com/yusuf-shahin/Basics-of-express.js/blob/main/concept%20of%20express.js/controller/peopleSetup.js)
