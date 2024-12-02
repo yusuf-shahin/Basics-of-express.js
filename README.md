@@ -24,7 +24,7 @@
 
 - [**Route in Express**](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#router-in-express--)
 
-- [**Controller**]()
+- [**Controller**](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#controller-clean-code)
 
 **Lets start our journey with Express Js**
 
@@ -1574,7 +1574,7 @@ module.exports = router
 app.use("/login", routeAuth)
 ```
 
-### The whole code of app.js
+#### The whole code of app.js
 
 ```js
 const express = require("express")
@@ -1612,9 +1612,13 @@ app.listen(9000, () => {
 
 ## Controller (clean code)
 
+- [**Route optimization in app.js**](https://github.com/yusuf-shahin/Basics-of-express.js?tab=readme-ov-file#route-optimization-in-appjs)
+
+### Why we need that and how we setup :-
+
 - main purpose to create a **controller** to keep **route** file much cleaner .
 
-Create a seperate name **controller** , then create a file **peopleSetup.js**
+- Create a seperate name **controller** , then create a file **peopleSetup.js**
 
 - set the all function to **peopleSetup.js** and export this as object :
 
